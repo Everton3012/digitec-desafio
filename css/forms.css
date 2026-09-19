@@ -1,0 +1,141 @@
+/* Filtros */
+
+.filters {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.filters label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.filters input,
+.filters select {
+    min-width: 180px;
+    padding: 10px 12px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    color: var(--color-text);
+    outline: none;
+}
+
+.filters input:focus,
+.filters select:focus {
+    border-color: var(--color-primary);
+}
+
+/* Modal */
+
+dialog {
+    position: fixed;
+    inset: 0;
+    width: min(620px, calc(100% - 32px));
+    max-height: 90vh;
+    margin: auto;
+    padding: 0;
+    background-color: var(--color-surface);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--color-text);
+}
+
+dialog::backdrop {
+    background-color: rgba(15, 23, 42, 0.5);
+}
+
+dialog form {
+    padding: 24px;
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 1.25rem;
+}
+
+.modal-header p {
+    margin-top: 4px;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.modal-header button {
+    padding: 0 6px;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+/* Formulários */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group span {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    color: var(--color-text);
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque | Digitec</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/forms.css">
+    <link rel="stylesheet" href="./css/tables.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Digitec</h1>
+            <span>Controle da Recepção</span>
+        </div>
+        <nav class="sidebar-nav" aria-label="Navegação principal">
+            <button type="button" data-section="dashboard">
+                Dashboard
+            </button>
+            <button type="button" data-section="inventory">
+                Estoque
+            </button>
+            <button type="button" data-section="requests">
+                Solicitações
+            </button>
+            <button type="button" data-section="movements">
+                Movimentações
+            </button>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <!-- Dashboard -->
+        <section id="dashboard" class="page-section">
+            <header class="page-header">
+                <div>
+                    <h2>Dashboard</h2>
+                    <p>Visão geral da recepção</p>
+                </div>
+            </header>
+            <div class="dashboard-cards">
+                <article class="card">
+                    <span>Total de materiais</span>
+                    <strong id="total-materials">0</strong>
+                </article>
+                <article class="card">
+                    <span>Estoque baixo</span>
+                    <strong id="low-stock">0</strong>
+                </article>
+                <article class="card">
+                    <span>Solicitações pendentes</span>
+                    <strong id="pending-requests">0</strong>
+                </article>
+                <article class="card">
+                    <span>Total de movimentações</span>
+                    <strong id="total-movements">0</strong>
+                </article>
+            </div>
+        </section>
+        <!-- Estoque -->
+        <section id="inventory" class="page-section" hidden>
+            <header class="page-header">
+                <div>
+                    <h2>Estoque</h2>
+                    <p>Gerencie os materiais do escritório</p>
+                </div>
+                <button type="button" id="new-material">
+                    Novo material
+                </button>
+            </header>
+            <div class="filters">
+                <label>
+                    <span>Pesquisar</span>
+                    <input type="search" id="material-search" placeholder="Pesquisar material...">
+                </label>
+                <label>
+                    <span>Categoria</span>
+                    <select id="category-filter">
+                        <option value="">Todas</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Situação</span>
+                    <select id="stock-filter">
+                        <option value="">Todas</option>
+                        <option value="available">Em estoque</option>
+                        <option value="low">Estoque baixo</option>
+                        <option value="out">Sem estoque</option>
+                    </select>
+                </label>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Categoria</th>
+                            <th>Quantidade</th>
+                            <th>Unidade</th>
+                            <th>Situação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="materials-table-body">
+                        <!-- Preenchido pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Solicitações -->
+        <section id="requests" class="page-section" hidden>
+            <header class="page-header">
+                <div>
+                    <h2>Solicitações</h2>
+                    <p>Solicitações de materiais dos colaboradores</p>
+                </div>
+                <button type="button" id="new-request">
+                    Nova solicitação
+                </button>
+            </header>
+            <div class="filters">
+                <label>
+                    <span>Prioridade</span>
+                    <select id="priority-filter">
+                        <option value="">Todas</option>
+                        <option value="low">Baixa</option>
+                        <option value="medium">Média</option>
+                        <option value="high">Alta</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Status</span>
+                    <select id="request-status-filter">
+                        <option value="">Todos</option>
+                        <option value="pending">Pendente</option>
+                        <option value="approved">Aprovada</option>
+                        <option value="delivered">Entregue</option>
+                        <option value="cancelled">Cancelada</option>
+                    </select>
+                </label>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Colaborador</th>
+                            <th>Material</th>
+                            <th>Quantidade</th>
+                            <th>Data</th>
+                            <th>Prioridade</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requests-table-body">
+                        <!-- Preenchido pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Movimentações -->
+        <section id="movements" class="page-section" hidden>
+            <header class="page-header">
+                <div>
+                    <h2>Movimentações</h2>
+                    <p>Histórico de entradas e saídas do estoque</p>
+                </div>
+            </header>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Tipo</th>
+                            <th>Quantidade</th>
+                            <th>Data</th>
+                            <th>Observações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="movements-table-body">
+                        <!-- Preenchido pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <dialog id="material-dialog">
+        <form id="material-form">
+            <header class="modal-header">
+                <div>
+                    <h2 id="material-form-title">Novo material</h2>
+                    <p>Preencha as informações do material.</p>
+                </div>
+
+                <button type="button" id="close-material-dialog" aria-label="Fechar">
+                    &times;
+                </button>
+            </header>
+
+            <input type="hidden" id="material-id">
+
+            <div class="form-grid">
+                <label class="form-group">
+                    <span>Nome do item</span>
+                    <input type="text" id="material-name" maxlength="100" required>
+                </label>
+
+                <label class="form-group">
+                    <span>Categoria</span>
+                    <select id="material-category" required>
+                        <option value="">Selecione</option>
+                        <option value="Papelaria">Papelaria</option>
+                        <option value="Limpeza">Limpeza</option>
+                        <option value="Copa">Copa</option>
+                        <option value="Tecnologia">Tecnologia</option>
+                        <option value="Escritório">Escritório</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </label>
+
+                <label class="form-group">
+                    <span>Quantidade inicial</span>
+                    <input type="number" id="material-quantity" min="0" value="0" required>
+                </label>
+
+                <label class="form-group">
+                    <span>Estoque mínimo</span>
+                    <input type="number" id="material-minimum-stock" min="0" value="0" required>
+                </label>
+
+                <label class="form-group">
+                    <span>Unidade de medida</span>
+                    <select id="material-unit" required>
+                        <option value="">Selecione</option>
+                        <option value="Unidade">Unidade</option>
+                        <option value="Caixa">Caixa</option>
+                        <option value="Pacote">Pacote</option>
+                        <option value="Litro">Litro</option>
+                        <option value="Quilograma">Quilograma</option>
+                    </select>
+                </label>
+
+                <label class="form-group">
+                    <span>Local de armazenamento</span>
+                    <input type="text" id="material-storage-location" maxlength="100" required>
+                </label>
+
+                <label class="form-group form-group-full">
+                    <span>Observações</span>
+                    <textarea id="material-notes" rows="3" maxlength="300"></textarea>
+                </label>
+            </div>
+
+            <footer class="modal-footer">
+                <button type="button" class="button-secondary" id="cancel-material">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="button-primary">
+                    Salvar material
+                </button>
+            </footer>
+        </form>
+    </dialog>
+    <dialog id="movement-dialog">
+        <form id="movement-form">
+            <header class="modal-header">
+                <div>
+                    <h2>Movimentar estoque</h2>
+                    <p id="movement-material-name"></p>
+                </div>
+
+                <button type="button" id="close-movement-dialog" aria-label="Fechar">
+                    &times;
+                </button>
+            </header>
+
+            <input type="hidden" id="movement-material-id">
+
+            <div class="form-grid">
+                <label class="form-group">
+                    <span>Tipo de movimentação</span>
+                    <select id="movement-type" required>
+                        <option value="entry">Entrada</option>
+                        <option value="exit">Saída</option>
+                    </select>
+                </label>
+
+                <label class="form-group">
+                    <span>Quantidade</span>
+                    <input type="number" id="movement-quantity" min="1" value="1" required>
+                </label>
+
+                <label class="form-group form-group-full">
+                    <span>Observações</span>
+                    <textarea id="movement-notes" rows="3" maxlength="300" placeholder="Opcional"></textarea>
+                </label>
+            </div>
+
+            <footer class="modal-footer">
+                <button type="button" class="button-secondary" id="cancel-movement">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="button-primary">
+                    Registrar
+                </button>
+            </footer>
+        </form>
+    </dialog>
+    <dialog id="request-dialog">
+        <form id="request-form">
+            <header class="modal-header">
+                <div>
+                    <h2>Nova solicitação</h2>
+                    <p>Registre uma solicitação de material.</p>
+                </div>
+
+                <button type="button" id="close-request-dialog" aria-label="Fechar">
+                    &times;
+                </button>
+            </header>
+
+            <div class="form-grid">
+                <label class="form-group">
+                    <span>Colaborador</span>
+                    <input type="text" id="request-employee" maxlength="100" required>
+                </label>
+
+                <label class="form-group">
+                    <span>Material</span>
+                    <select id="request-material" required>
+                        <option value="">
+                            Selecione
+                        </option>
+                    </select>
+                </label>
+
+                <label class="form-group">
+                    <span>Quantidade</span>
+                    <input type="number" id="request-quantity" min="1" value="1" required>
+                </label>
+
+                <label class="form-group">
+                    <span>Prioridade</span>
+                    <select id="request-priority" required>
+                        <option value="low">
+                            Baixa
+                        </option>
+
+                        <option value="medium" selected>
+                            Média
+                        </option>
+
+                        <option value="high">
+                            Alta
+                        </option>
+                    </select>
+                </label>
+
+                <label class="form-group form-group-full">
+                    <span>Observações</span>
+                    <textarea id="request-notes" rows="3" maxlength="300" placeholder="Opcional"></textarea>
+                </label>
+            </div>
+
+            <footer class="modal-footer">
+                <button type="button" class="button-secondary" id="cancel-request">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="button-primary">
+                    Registrar solicitação
+                </button>
+            </footer>
+        </form>
+    </dialog>
+    <script type="module" src="./js/app.js"></script>
+</body>
+
+</html>
