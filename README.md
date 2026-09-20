@@ -6,7 +6,7 @@ Aplicação web desenvolvida como desafio prático para o processo seletivo de *
 
 O sistema foi desenvolvido para auxiliar no controle de materiais de escritório e na organização das rotinas da recepção, centralizando informações que normalmente seriam controladas por planilhas ou registros manuais.
 
-A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, registrar entradas e saídas e controlar solicitações realizadas por colaboradores.
+A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, registrar entradas e saídas, controlar solicitações realizadas por colaboradores e gerar relatórios em CSV.
 
 ## Funcionalidades
 
@@ -21,6 +21,11 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 * Aprovação, cancelamento e entrega de solicitações
 * Atualização automática do estoque após a entrega de materiais
 * Dashboard com indicadores gerais
+* Gráficos de situação do estoque e movimentações
+* Exportação do estoque para CSV
+* Exportação de movimentações por período para CSV
+* Exportação de solicitações por período para CSV
+* Feedbacks visuais e confirmações para ações importantes
 * Persistência dos dados no navegador
 * Interface responsiva para desktop e dispositivos móveis
 
@@ -31,12 +36,14 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 * JavaScript
 * ES Modules
 * LocalStorage
+* Chart.js
 * Lucide Icons
 
 ## Estrutura do projeto
 
 ```text
 ├── index.html
+│
 ├── css/
 │   ├── reset.css
 │   ├── style.css
@@ -64,26 +71,31 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
     │   ├── navigation.js
     │   ├── feedback.js
     │   ├── confirm.js
+    │   ├── export-dialog.js
     │   │
     │   ├── inventory/
     │   │   ├── inventory-ui.js
     │   │   ├── material-form.js
     │   │   ├── material-details.js
-    │   │   └── materials-table.js
+    │   │   ├── materials-table.js
+    │   │   └── export.js
     │   │
     │   ├── movements/
     │   │   ├── index.js
     │   │   ├── form.js
-    │   │   └── table.js
+    │   │   ├── table.js
+    │   │   └── export.js
     │   │
     │   └── requests/
     │       ├── index.js
     │       ├── form.js
     │       ├── table.js
-    │       └── request-details.js
+    │       ├── request-details.js
+    │       └── export.js
     │
     └── utils/
-        └── formatters.js
+        ├── formatters.js
+        └── csv.js
 ```
 
 ## Armazenamento
@@ -105,7 +117,7 @@ Uma opção é utilizar a extensão **Live Server** no Visual Studio Code:
 3. Selecione **Open with Live Server**.
 4. A aplicação será aberta no navegador.
 
-> É necessário acesso à internet para o carregamento dos ícones utilizados pela interface através do CDN do Lucide.
+> É necessário acesso à internet para o carregamento do **Lucide Icons** e do **Chart.js**, utilizados através de CDN.
 
 ## Observações
 
