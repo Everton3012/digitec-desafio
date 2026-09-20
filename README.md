@@ -25,6 +25,7 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 * Exportação do estoque para CSV
 * Exportação de movimentações por período para CSV
 * Exportação de solicitações por período para CSV
+* Tema claro e escuro com preferência persistida
 * Feedbacks visuais e confirmações para ações importantes
 * Persistência dos dados no navegador
 * Interface responsiva para desktop e dispositivos móveis
@@ -72,6 +73,7 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
     │   ├── feedback.js
     │   ├── confirm.js
     │   ├── export-dialog.js
+    │   ├── theme.js
     │   │
     │   ├── inventory/
     │   │   ├── inventory-ui.js
@@ -102,7 +104,7 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 
 Os dados são armazenados localmente no navegador utilizando a API `localStorage`.
 
-São mantidos registros de materiais, movimentações de estoque e solicitações. Não é necessário configurar banco de dados ou servidor backend para utilizar a aplicação.
+São mantidos registros de materiais, movimentações de estoque, solicitações e preferência de tema. Não é necessário configurar banco de dados ou servidor backend para utilizar a aplicação.
 
 ## Execução
 
@@ -121,6 +123,6 @@ Uma opção é utilizar a extensão **Live Server** no Visual Studio Code:
 
 ## Observações
 
-Os dados permanecem armazenados no navegador utilizado para executar a aplicação. A limpeza dos dados do site ou do `localStorage` removerá os registros cadastrados.
+Os dados permanecem armazenados no navegador utilizado para executar a aplicação. A limpeza dos dados do site ou do `localStorage` removerá os registros cadastrados e a preferência de tema.
 
 Como os dados são armazenados localmente, diferentes navegadores ou dispositivos possuem conjuntos de dados independentes.
