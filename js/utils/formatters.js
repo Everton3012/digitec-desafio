@@ -35,8 +35,18 @@ export function formatDate(date) {
     }
 
     return new Intl.DateTimeFormat("pt-BR", {
-        dateStyle: "short",
-        timeStyle: "short"
+        dateStyle: "short"
+    }).format(new Date(date));
+}
+
+export function formatTime(date) {
+    if (!date) {
+        return "-";
+    }
+
+    return new Intl.DateTimeFormat("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit"
     }).format(new Date(date));
 }
 

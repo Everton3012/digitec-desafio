@@ -4,6 +4,7 @@ import {
 
 import {
     formatDate,
+    formatTime,
     getPriorityLabel,
     getRequestStatusLabel
 } from "../../utils/formatters.js";
@@ -39,6 +40,11 @@ const fields = {
             "#request-detail-date"
         ),
 
+    time:
+        document.querySelector(
+            "#request-detail-time"
+        ),
+
     priority:
         document.querySelector(
             "#request-detail-priority"
@@ -49,14 +55,24 @@ const fields = {
             "#request-detail-status"
         ),
 
-    deliveredAt:
+    deliveredDate:
         document.querySelector(
-            "#request-detail-delivered"
+            "#request-detail-delivered-date"
         ),
 
-    deliveredGroup:
+    deliveredTime:
         document.querySelector(
-            "#request-detail-delivered-group"
+            "#request-detail-delivered-time"
+        ),
+
+    deliveredDateGroup:
+        document.querySelector(
+            "#request-detail-delivered-date-group"
+        ),
+
+    deliveredTimeGroup:
+        document.querySelector(
+            "#request-detail-delivered-time-group"
         ),
 
     notes:
@@ -85,6 +101,9 @@ export function openRequestDetails(requestId) {
     fields.date.textContent =
         formatDate(request.requestDate);
 
+    fields.time.textContent =
+        formatTime(request.requestDate);
+
     fields.priority.textContent =
         getPriorityLabel(request.priority);
 
@@ -96,13 +115,22 @@ export function openRequestDetails(requestId) {
         "Sem observações";
 
     if (request.deliveredAt) {
-        fields.deliveredAt.textContent =
+        fields.deliveredDate.textContent =
             formatDate(request.deliveredAt);
 
-        fields.deliveredGroup.hidden =
+        fields.deliveredTime.textContent =
+            formatTime(request.deliveredAt);
+
+        fields.deliveredDateGroup.hidden =
+            false;
+
+        fields.deliveredTimeGroup.hidden =
             false;
     } else {
-        fields.deliveredGroup.hidden =
+        fields.deliveredDateGroup.hidden =
+            true;
+
+        fields.deliveredTimeGroup.hidden =
             true;
     }
 

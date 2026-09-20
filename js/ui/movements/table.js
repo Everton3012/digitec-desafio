@@ -4,6 +4,7 @@ import {
 
 import {
     formatDate,
+    formatTime,
     getMovementTypeLabel
 } from "../../utils/formatters.js";
 
@@ -41,6 +42,11 @@ const fields = {
     date:
         document.querySelector(
             "#movement-detail-date"
+        ),
+
+    time:
+        document.querySelector(
+            "#movement-detail-time"
         ),
 
     source:
@@ -86,21 +92,21 @@ function createMovementRow(movement) {
 
     row.innerHTML = `
         <td>${movement.materialName}</td>
-    
+
         <td>
             <span class="badge badge-${movement.type}">
                 ${getMovementTypeLabel(movement.type)}
             </span>
         </td>
-    
+
         <td class="desktop-only">
             ${movement.quantity} ${movement.materialUnit}
         </td>
-    
+
         <td class="desktop-only">
             ${formatDate(movement.date)}
         </td>
-    
+
         <td class="table-actions">
             <button
                 type="button"
@@ -174,6 +180,9 @@ function openMovementDetails(movementId) {
 
     fields.date.textContent =
         formatDate(movement.date);
+
+    fields.time.textContent =
+        formatTime(movement.date);
 
     fields.source.textContent =
         getMovementSourceLabel(
