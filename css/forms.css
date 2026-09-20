@@ -413,7 +413,8 @@ dialog form {
 
 .movement-details,
 .material-details,
-.request-details {
+.request-details,
+.delivery-details {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
@@ -423,7 +424,8 @@ dialog form {
 
 .movement-detail-item,
 .material-detail-item,
-.request-detail-item {
+.request-detail-item,
+.delivery-detail-item {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -439,9 +441,11 @@ dialog form {
 .movement-detail-item span,
 .material-detail-item span,
 .request-detail-item span,
+.delivery-detail-item span,
 .movement-detail-notes > span,
 .material-detail-notes > span,
-.request-detail-notes > span {
+.request-detail-notes > span,
+.delivery-detail-notes > span {
     color: var(--color-text-secondary);
     font-size: 0.8rem;
     font-weight: 500;
@@ -449,7 +453,8 @@ dialog form {
 
 .movement-detail-item strong,
 .material-detail-item strong,
-.request-detail-item strong {
+.request-detail-item strong,
+.delivery-detail-item strong {
     color: var(--color-text);
     font-size: 0.95rem;
     font-weight: 600;
@@ -459,7 +464,8 @@ dialog form {
 
 .movement-detail-notes,
 .material-detail-notes,
-.request-detail-notes {
+.request-detail-notes,
+.delivery-detail-notes {
     grid-column: 1 / -1;
 
     padding: 16px;
@@ -471,7 +477,8 @@ dialog form {
 
 .movement-detail-notes p,
 .material-detail-notes p,
-.request-detail-notes p {
+.request-detail-notes p,
+.delivery-detail-notes p {
     margin: 8px 0 0;
 
     color: var(--color-text);

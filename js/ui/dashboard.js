@@ -12,6 +12,10 @@ import {
 } from "../requests/requests.js";
 
 import {
+    getPendingDeliveriesCount
+} from "../deliveries/deliveries.js";
+
+import {
     STOCK_STATUS,
     MOVEMENT_TYPES,
     REQUEST_STATUS
@@ -35,6 +39,9 @@ const elements = {
 
     totalMovements:
         document.querySelector("#total-movements"),
+
+    pendingDeliveries:
+        document.querySelector("#pending-deliveries"),
 
     stockStatusChart:
         document.querySelector("#stock-status-chart"),
@@ -292,6 +299,9 @@ export function renderDashboard() {
 
     elements.totalMovements.textContent =
         movements.length;
+
+    elements.pendingDeliveries.textContent =
+        getPendingDeliveriesCount();
 
     renderStockStatusChart(stockSummary);
 

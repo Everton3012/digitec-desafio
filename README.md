@@ -4,15 +4,15 @@ Aplicação web desenvolvida como desafio prático para o processo seletivo de *
 
 ## Demonstração
 
-A aplicação está disponível para teste online:
+A aplicação está disponível online pelo GitHub Pages:
 
-**https://everton3012.github.io/digitec-desafio/**
+https://everton3012.github.io/digitec-desafio/
 
 ## Sobre o projeto
 
 O sistema foi desenvolvido para auxiliar no controle de materiais de escritório e na organização das rotinas da recepção, centralizando informações que normalmente seriam controladas por planilhas ou registros manuais.
 
-A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, registrar entradas e saídas, controlar solicitações realizadas por colaboradores e gerar relatórios em CSV.
+A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, registrar entradas e saídas, controlar solicitações de materiais e entregas recebidas, além de gerar relatórios em CSV.
 
 ## Funcionalidades
 
@@ -20,18 +20,22 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 * Controle de quantidade e estoque mínimo
 * Identificação de materiais em estoque, com estoque baixo ou esgotados
 * Registro de entradas e saídas de estoque
-* Histórico detalhado de movimentações
+* Histórico de movimentações
 * Pesquisa e filtros de materiais
 * Cadastro de solicitações de materiais
 * Controle de prioridade e status das solicitações
 * Aprovação, cancelamento e entrega de solicitações
 * Atualização automática do estoque após a entrega de materiais
-* Registro de data e hora das movimentações e entregas
+* Registro de encomendas, documentos e correspondências
+* Controle de status das entregas
+* Pesquisa de entregas por destinatário e filtro por status
+* Visualização de entregas pendentes de retirada
 * Dashboard com indicadores gerais
 * Gráficos de situação do estoque e movimentações
 * Exportação do estoque para CSV
 * Exportação de movimentações por período para CSV
 * Exportação de solicitações por período para CSV
+* Exportação de entregas por período para CSV
 * Tema claro e escuro com preferência persistida
 * Feedbacks visuais e confirmações para ações importantes
 * Persistência dos dados no navegador
@@ -74,6 +78,9 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
     ├── requests/
     │   └── requests.js
     │
+    ├── deliveries/
+    │   └── deliveries.js
+    │
     ├── ui/
     │   ├── dashboard.js
     │   ├── navigation.js
@@ -95,11 +102,18 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
     │   │   ├── table.js
     │   │   └── export.js
     │   │
-    │   └── requests/
+    │   ├── requests/
+    │   │   ├── index.js
+    │   │   ├── form.js
+    │   │   ├── table.js
+    │   │   ├── request-details.js
+    │   │   └── export.js
+    │   │
+    │   └── deliveries/
     │       ├── index.js
     │       ├── form.js
     │       ├── table.js
-    │       ├── request-details.js
+    │       ├── delivery-details.js
     │       └── export.js
     │
     └── utils/
@@ -111,17 +125,9 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 
 Os dados são armazenados localmente no navegador utilizando a API `localStorage`.
 
-São mantidos registros de materiais, movimentações de estoque, solicitações e preferência de tema. Não é necessário configurar banco de dados ou servidor backend para utilizar a aplicação.
+São mantidos registros de materiais, movimentações de estoque, solicitações, entregas e preferência de tema. Não é necessário configurar banco de dados ou servidor backend para utilizar a aplicação.
 
 ## Execução
-
-### Demonstração online
-
-A aplicação pode ser acessada diretamente pelo GitHub Pages:
-
-**https://everton3012.github.io/digitec-desafio/**
-
-### Execução local
 
 O projeto não necessita de instalação de pacotes ou processo de build.
 

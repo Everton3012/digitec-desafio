@@ -294,7 +294,6 @@ body {
     display: none;
 }
 
-
 /* ================================
    Conteúdo principal
 ================================ */
@@ -325,7 +324,6 @@ body {
 
     font-size: 0.9rem;
 }
-
 
 /* ================================
    Botões
@@ -379,13 +377,13 @@ button {
     flex-shrink: 0;
 }
 
-
 /* ================================
    Botões principais das páginas
 ================================ */
 
 #new-material,
-#new-request {
+#new-request,
+#new-delivery {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -408,28 +406,31 @@ button {
 }
 
 #new-material:hover,
-#new-request:hover {
+#new-request:hover,
+#new-delivery:hover {
     background-color: var(--color-primary-hover);
 }
 
 #new-material:active,
-#new-request:active {
+#new-request:active,
+#new-delivery:active {
     transform: translateY(1px);
 }
 
 #new-material:focus-visible,
-#new-request:focus-visible {
+#new-request:focus-visible,
+#new-delivery:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }
 
 #new-material .lucide,
-#new-request .lucide {
+#new-request .lucide,
+#new-delivery .lucide {
     width: 17px;
     height: 17px;
     flex-shrink: 0;
 }
-
 
 /* ================================
    Ações da página
@@ -440,7 +441,6 @@ button {
     align-items: center;
     gap: 10px;
 }
-
 
 /* ================================
    Dashboard
@@ -533,7 +533,6 @@ button {
     line-height: 1.1;
 }
 
-
 /* ================================
    Gráficos do dashboard
 ================================ */
@@ -585,7 +584,6 @@ button {
     width: 100%;
     height: 280px;
 }
-
 
 /* ================================
    Toasts
@@ -661,7 +659,6 @@ button {
 .toast-leaving {
     animation: toast-leave 0.2s ease forwards;
 }
-
 
 /* ================================
    Animações

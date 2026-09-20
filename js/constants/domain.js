@@ -21,3 +21,17 @@ export const REQUEST_PRIORITY = Object.freeze({
     MEDIUM: "medium",
     HIGH: "high"
 });
+
+export const DELIVERY_TYPES = Object.freeze({
+    PACKAGE: "package",
+    DOCUMENT: "document",
+    CORRESPONDENCE: "correspondence",
+    OTHER: "other"
+});
+
+export const DELIVERY_STATUS = Object.freeze({
+    RECEIVED: "received",
+    NOTIFIED: "notified",
+    WITHDRAWN: "withdrawn",
+    CANCELLED: "cancelled"
+});

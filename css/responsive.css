@@ -302,7 +302,8 @@
     }
 
     #new-material,
-    #new-request {
+    #new-request,
+    #new-delivery {
         width: 100%;
     }
 

@@ -2,7 +2,9 @@ import {
     STOCK_STATUS,
     MOVEMENT_TYPES,
     REQUEST_STATUS,
-    REQUEST_PRIORITY
+    REQUEST_PRIORITY,
+    DELIVERY_TYPES,
+    DELIVERY_STATUS
 } from "../constants/domain.js";
 
 const STOCK_STATUS_LABELS = Object.freeze({
@@ -20,6 +22,20 @@ const REQUEST_PRIORITY_LABELS = Object.freeze({
     [REQUEST_PRIORITY.LOW]: "Baixa",
     [REQUEST_PRIORITY.MEDIUM]: "Média",
     [REQUEST_PRIORITY.HIGH]: "Alta"
+});
+
+const DELIVERY_TYPE_LABELS = Object.freeze({
+    [DELIVERY_TYPES.PACKAGE]: "Encomenda",
+    [DELIVERY_TYPES.DOCUMENT]: "Documento",
+    [DELIVERY_TYPES.CORRESPONDENCE]: "Correspondência",
+    [DELIVERY_TYPES.OTHER]: "Outros"
+});
+
+const DELIVERY_STATUS_LABELS = Object.freeze({
+    [DELIVERY_STATUS.RECEIVED]: "Recebido",
+    [DELIVERY_STATUS.NOTIFIED]: "Avisado",
+    [DELIVERY_STATUS.WITHDRAWN]: "Retirado",
+    [DELIVERY_STATUS.CANCELLED]: "Cancelado"
 });
 
 const REQUEST_STATUS_LABELS = Object.freeze({
@@ -64,4 +80,12 @@ export function getPriorityLabel(priority) {
 
 export function getRequestStatusLabel(status) {
     return REQUEST_STATUS_LABELS[status] ?? status;
+}
+
+export function getDeliveryTypeLabel(type) {
+    return DELIVERY_TYPE_LABELS[type] ?? type;
+}
+
+export function getDeliveryStatusLabel(status) {
+    return DELIVERY_STATUS_LABELS[status] ?? status;
 }

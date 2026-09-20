@@ -24,7 +24,6 @@
     border-radius: 999px;
 }
 
-
 /* ================================
    Tabela
 ================================ */
@@ -69,7 +68,6 @@ tbody tr:hover {
     background-color: var(--color-background);
 }
 
-
 /* ================================
    Badges
 ================================ */
@@ -86,46 +84,45 @@ tbody tr:hover {
     font-weight: 600;
 }
 
-
 /* Estoque disponível / entrada */
 
 .badge-available,
 .badge-entry,
 .badge-priority-low,
-.badge-request-delivered {
+.badge-request-delivered,
+.badge-delivery-withdrawn {
     background-color: var(--color-success-soft);
     color: var(--color-success-strong);
 }
-
 
 /* Atenção / pendente */
 
 .badge-low,
 .badge-priority-medium,
-.badge-request-pending {
+.badge-request-pending,
+.badge-delivery-received {
     background-color: var(--color-warning-soft);
     color: var(--color-warning-strong);
 }
-
 
 /* Crítico / saída */
 
 .badge-out,
 .badge-exit,
 .badge-priority-high,
-.badge-request-cancelled {
+.badge-request-cancelled,
+.badge-delivery-cancelled {
     background-color: var(--color-danger-soft);
     color: var(--color-danger-strong);
 }
 
+/* Aprovado / avisado */
 
-/* Aprovado */
-
-.badge-request-approved {
+.badge-request-approved,
+.badge-delivery-notified {
     background-color: var(--color-primary-soft);
     color: var(--color-primary);
 }
-
 
 /* ================================
    Ações da tabela
@@ -165,7 +162,6 @@ tbody tr:hover {
     border-color: var(--color-primary);
     color: var(--color-primary);
 }
-
 
 /* ================================
    Botões com ícone
@@ -214,11 +210,16 @@ tbody tr:hover {
     color: var(--color-danger);
 }
 
+.icon-button-success:hover {
+    background-color: var(--color-success-soft);
+    border-color: var(--color-success);
+    color: var(--color-success-strong);
+}
+
 .icon-button .lucide {
     width: 17px;
     height: 17px;
 }
-
 
 /* ================================
    Entrega de solicitação
@@ -234,7 +235,6 @@ tbody tr:hover {
     color: #ffffff;
     opacity: 0.9;
 }
-
 
 /* ================================
    Solicitações finalizadas

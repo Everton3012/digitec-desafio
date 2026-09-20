@@ -64,6 +64,11 @@
                 <i data-lucide="history" aria-hidden="true"></i>
                 <span>Movimentações</span>
             </button>
+            <button type="button" data-section="deliveries" title="Entregas">
+                <i data-lucide="package-open" aria-hidden="true"></i>
+                <span>Entregas</span>
+            </button>
+
         </nav>
 
         <div class="sidebar-footer">
@@ -152,6 +157,17 @@
                         <strong id="total-movements">0</strong>
                     </div>
                 </article>
+                <article class="card">
+                    <div class="card-icon card-icon-warning">
+                        <i data-lucide="package-open" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="card-content">
+                        <span>Entregas pendentes</span>
+                        <strong id="pending-deliveries">0</strong>
+                    </div>
+                </article>
+
             </div>
             <div class="dashboard-charts">
                 <article class="chart-card">
@@ -322,6 +338,63 @@
                         </tr>
                     </thead>
                     <tbody id="movements-table-body">
+                        <!-- Preenchido pelo JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Entregas e Correspondências -->
+        <section id="deliveries" class="page-section" hidden>
+            <header class="page-header">
+                <div>
+                    <h2>Entregas e Correspondências</h2>
+                    <p>Controle de encomendas, documentos e correspondências recebidas</p>
+                </div>
+
+                <div class="page-actions">
+                    <button type="button" id="export-deliveries" class="button-secondary">
+                        <i data-lucide="download" aria-hidden="true"></i>
+                        <span>Exportar CSV</span>
+                    </button>
+
+                    <button type="button" id="new-delivery">
+                        <i data-lucide="plus" aria-hidden="true"></i>
+                        <span>Nova entrega</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="filters">
+                <label>
+                    <span>Pesquisar</span>
+                    <input type="search" id="delivery-search" placeholder="Pesquisar destinatário...">
+                </label>
+
+                <label>
+                    <span>Status</span>
+                    <select id="delivery-status-filter">
+                        <option value="">Todos</option>
+                        <option value="pending">Pendentes de retirada</option>
+                        <option value="received">Recebido</option>
+                        <option value="notified">Avisado</option>
+                        <option value="withdrawn">Retirado</option>
+                        <option value="cancelled">Cancelado</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Destinatário</th>
+                            <th class="desktop-only">Tipo</th>
+                            <th class="desktop-only">Recebimento</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deliveries-table-body">
                         <!-- Preenchido pelo JS -->
                     </tbody>
                 </table>
@@ -553,6 +626,69 @@
                 <button type="submit" class="button-primary">
                     Registrar solicitação
                 </button>
+            </footer>
+        </form>
+    </dialog>
+
+    <dialog id="delivery-dialog" class="form-dialog">
+        <form id="delivery-form">
+            <header class="modal-header">
+                <div>
+                    <span class="modal-eyebrow">Recepção</span>
+                    <h2>Nova entrega</h2>
+                    <p>Registre uma encomenda, documento ou correspondência recebida.</p>
+                </div>
+
+                <button type="button" id="close-delivery-dialog" class="modal-close" aria-label="Fechar" title="Fechar">
+                    <i data-lucide="x" aria-hidden="true"></i>
+                </button>
+            </header>
+
+            <div class="modal-content">
+                <div class="form-grid">
+                    <label class="form-group">
+                        <span>Destinatário</span>
+                        <input type="text" id="delivery-recipient" maxlength="100" placeholder="Nome do destinatário"
+                            required>
+                    </label>
+
+                    <label class="form-group">
+                        <span>Remetente</span>
+                        <input type="text" id="delivery-sender" maxlength="100" placeholder="Nome do remetente"
+                            required>
+                    </label>
+
+                    <label class="form-group">
+                        <span>Tipo</span>
+                        <select id="delivery-type" required>
+                            <option value="package">Encomenda</option>
+                            <option value="document">Documento</option>
+                            <option value="correspondence">Correspondência</option>
+                            <option value="other">Outros</option>
+                        </select>
+                    </label>
+
+                    <label class="form-group">
+                        <span>Data de recebimento</span>
+                        <input type="date" id="delivery-date" required>
+                    </label>
+
+                    <label class="form-group">
+                        <span>Horário</span>
+                        <input type="time" id="delivery-time" required>
+                    </label>
+
+                    <label class="form-group form-group-full">
+                        <span>Observações</span>
+                        <textarea id="delivery-notes" rows="3" maxlength="300"
+                            placeholder="Informações adicionais sobre a entrega..."></textarea>
+                    </label>
+                </div>
+            </div>
+
+            <footer class="modal-footer">
+                <button type="button" class="button-secondary" id="cancel-delivery">Cancelar</button>
+                <button type="submit" class="button-primary">Registrar entrega</button>
             </footer>
         </form>
     </dialog>
@@ -807,6 +943,50 @@
                 <p id="request-detail-notes">
                     Sem observações
                 </p>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="delivery-details-dialog" class="details-dialog">
+        <div class="modal-header">
+            <div>
+                <span class="details-eyebrow">Entrega</span>
+                <h2>Detalhes da entrega</h2>
+            </div>
+
+            <button type="button" id="close-delivery-details" class="modal-close" aria-label="Fechar">
+                <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="delivery-details">
+            <div class="delivery-detail-item">
+                <span>Destinatário</span>
+                <strong id="delivery-detail-recipient">-</strong>
+            </div>
+            <div class="delivery-detail-item">
+                <span>Tipo</span>
+                <strong id="delivery-detail-type">-</strong>
+            </div>
+            <div class="delivery-detail-item">
+                <span>Remetente</span>
+                <strong id="delivery-detail-sender">-</strong>
+            </div>
+            <div class="delivery-detail-item">
+                <span>Status</span>
+                <strong id="delivery-detail-status">-</strong>
+            </div>
+            <div class="delivery-detail-item">
+                <span>Data de recebimento</span>
+                <strong id="delivery-detail-date">-</strong>
+            </div>
+            <div class="delivery-detail-item">
+                <span>Horário</span>
+                <strong id="delivery-detail-time">-</strong>
+            </div>
+            <div class="delivery-detail-notes">
+                <span>Observações</span>
+                <p id="delivery-detail-notes">Sem observações</p>
             </div>
         </div>
     </dialog>

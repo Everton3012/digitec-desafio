@@ -16,6 +16,10 @@ import {
     refreshRequestsUI
 } from "./ui/requests/index.js";
 import {
+    initDeliveriesUI,
+    refreshDeliveriesUI
+} from "./ui/deliveries/index.js";
+import {
     initDashboard,
     refreshDashboard
 } from "./ui/dashboard.js";
@@ -31,6 +35,7 @@ function refreshApplication() {
     refreshInventoryUI();
     refreshMovementsUI();
     refreshRequestsUI();
+    refreshDeliveriesUI();
     refreshDashboard();
     renderIcons();
 }
@@ -40,6 +45,7 @@ function initApplication() {
     initInventoryUI();
     initMovementsUI();
     initRequestsUI();
+    initDeliveriesUI();
     initDashboard();
     initNavigation();
     initExportDialog();

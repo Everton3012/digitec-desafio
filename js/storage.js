@@ -1,7 +1,8 @@
 export const STORAGE_KEYS = Object.freeze({
     MATERIALS: "digitec_materials",
     MOVEMENTS: "digitec_movements",
-    REQUESTS: "digitec_requests"
+    REQUESTS: "digitec_requests",
+    DELIVERIES: "digitec_deliveries"
 });
 
 export function getData(key) {
