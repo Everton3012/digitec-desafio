@@ -1,21 +1,50 @@
-/* Estrutura */
+/* ================================
+   Container
+================================ */
 
 .table-container {
     overflow-x: auto;
+
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
+
+    scrollbar-width: thin;
+    scrollbar-color:
+            var(--color-border)
+            transparent;
 }
+
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 999px;
+}
+
+
+/* ================================
+   Tabela
+================================ */
 
 table {
     width: 100%;
 }
 
+.table-container table {
+    min-width: 680px;
+}
+
 th,
 td {
     padding: 14px 16px;
+
     border-bottom: 1px solid var(--color-border);
+
     text-align: left;
+    vertical-align: middle;
 }
 
 th {
@@ -23,6 +52,7 @@ th {
     font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 td {
@@ -37,18 +67,25 @@ tbody tr:hover {
     background-color: var(--color-background);
 }
 
-/* Badges */
+
+/* ================================
+   Badges
+================================ */
 
 .badge {
     display: inline-flex;
     align-items: center;
+
     padding: 4px 8px;
+
     border-radius: 999px;
+
     font-size: 0.75rem;
     font-weight: 600;
 }
 
-/* Estoque */
+
+/* Estoque disponível / entrada */
 
 .badge-available,
 .badge-entry,
@@ -58,6 +95,9 @@ tbody tr:hover {
     color: #166534;
 }
 
+
+/* Atenção / pendente */
+
 .badge-low,
 .badge-priority-medium,
 .badge-request-pending {
@@ -65,29 +105,37 @@ tbody tr:hover {
     color: #92400e;
 }
 
+
+/* Crítico / saída */
+
 .badge-out,
 .badge-exit,
-.badge-priority-high {
+.badge-priority-high,
+.badge-request-cancelled {
     background-color: #fee2e2;
     color: #991b1b;
 }
+
+
+/* Aprovado */
 
 .badge-request-approved {
     background-color: #dbeafe;
     color: #1e40af;
 }
 
-.badge-request-cancelled {
-    background-color: #f1f5f9;
-    color: #475569;
-}
 
-/* Ações */
+/* ================================
+   Ações da tabela
+================================ */
 
 .table-actions {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-wrap: nowrap;
     gap: 6px;
+
+    white-space: nowrap;
 }
 
 .table-actions button,
@@ -104,6 +152,8 @@ tbody tr:hover {
 }
 
 .table-actions select {
+    min-width: 110px;
+
     background-color: var(--color-surface);
     color: var(--color-text);
 }
@@ -113,10 +163,60 @@ tbody tr:hover {
     color: var(--color-primary);
 }
 
+
+/* ================================
+   Botões com ícone
+================================ */
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+    padding: 0;
+
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    color: var(--color-text-secondary);
+
+    transition:
+            background-color var(--transition),
+            border-color var(--transition),
+            color var(--transition);
+}
+
+.icon-button:hover {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    color: var(--color-primary);
+}
+
+.icon-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.icon-button-danger:hover,
 .table-actions button[data-action="delete"]:hover {
-    border-color: var(--color-danger);
+    background-color: #fef2f2;
+    border-color: #fecaca;
     color: var(--color-danger);
 }
+
+.icon-button .lucide {
+    width: 17px;
+    height: 17px;
+}
+
+
+/* ================================
+   Entrega de solicitação
+================================ */
 
 .table-actions button[data-action="deliver"] {
     background-color: var(--color-success);
@@ -130,8 +230,20 @@ tbody tr:hover {
     opacity: 0.9;
 }
 
+
+/* ================================
+   Solicitações finalizadas
+================================ */
+
 .request-finished {
-    color: var(--color-success);
     font-size: 0.875rem;
     font-weight: 600;
+}
+
+.request-finished-delivered {
+    color: var(--color-success);
+}
+
+.request-finished-cancelled {
+    color: var(--color-danger);
 }

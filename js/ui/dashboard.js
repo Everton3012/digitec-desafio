@@ -20,8 +20,14 @@ const elements = {
     totalMaterials:
         document.querySelector("#total-materials"),
 
+    availableStock:
+        document.querySelector("#available-stock"),
+
     lowStock:
         document.querySelector("#low-stock"),
+
+    outStock:
+        document.querySelector("#out-stock"),
 
     pendingRequests:
         document.querySelector("#pending-requests"),
@@ -30,12 +36,21 @@ const elements = {
         document.querySelector("#total-movements")
 };
 
-function getLowStockCount(materials) {
-    return materials.filter(
-        (material) =>
-            getStockStatus(material) ===
-            STOCK_STATUS.LOW
-    ).length;
+function getStockSummary(materials) {
+    const summary = {
+        [STOCK_STATUS.AVAILABLE]: 0,
+        [STOCK_STATUS.LOW]: 0,
+        [STOCK_STATUS.OUT]: 0
+    };
+
+    materials.forEach((material) => {
+        const status =
+            getStockStatus(material);
+
+        summary[status]++;
+    });
+
+    return summary;
 }
 
 function getPendingRequestsCount(requests) {
@@ -51,11 +66,20 @@ export function renderDashboard() {
     const movements = getMovements();
     const requests = getRequests();
 
+    const stockSummary =
+        getStockSummary(materials);
+
     elements.totalMaterials.textContent =
         materials.length;
 
+    elements.availableStock.textContent =
+        stockSummary[STOCK_STATUS.AVAILABLE];
+
     elements.lowStock.textContent =
-        getLowStockCount(materials);
+        stockSummary[STOCK_STATUS.LOW];
+
+    elements.outStock.textContent =
+        stockSummary[STOCK_STATUS.OUT];
 
     elements.pendingRequests.textContent =
         getPendingRequestsCount(requests);

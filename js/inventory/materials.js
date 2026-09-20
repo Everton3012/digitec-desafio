@@ -137,8 +137,11 @@ export function addMaterial(data) {
             material,
             MOVEMENT_TYPES.ENTRY,
             material.quantity,
-            "Estoque inicial",
-            now
+            "",
+            now,
+            {
+                source: "initial"
+            }
         );
     }
 

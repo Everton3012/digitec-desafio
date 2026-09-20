@@ -10,6 +10,10 @@ import {
     APP_EVENTS
 } from "../../constants/events.js";
 
+import {
+    showToast
+} from "../feedback.js";
+
 const dialog =
     document.querySelector("#movement-dialog");
 
@@ -50,7 +54,11 @@ export function openMovementForm(materialId) {
         getMaterialById(materialId);
 
     if (!material) {
-        alert("Material não encontrado.");
+        showToast(
+            "Material não encontrado.",
+            "error"
+        );
+
         return;
     }
 
@@ -82,8 +90,15 @@ function handleSubmit(event) {
 
         closeMovementForm();
         notifyDataChanged();
+
+        showToast(
+            "Movimentação registrada com sucesso."
+        );
     } catch (error) {
-        alert(error.message);
+        showToast(
+            error.message,
+            "error"
+        );
     }
 }
 

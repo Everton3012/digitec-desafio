@@ -6,6 +6,10 @@ import {
 } from "../../requests/requests.js";
 
 import {
+    openRequestDetails
+} from "./request-details.js";
+
+import {
     getMaterialById
 } from "../../inventory/materials.js";
 
@@ -23,24 +27,44 @@ import {
 } from "../../constants/events.js";
 
 import {
-    formatDate,
-    getPriorityLabel,
     getRequestStatusLabel
 } from "../../utils/formatters.js";
 
+import {
+    showToast
+} from "../feedback.js";
+
+import {
+    confirmAction
+} from "../confirm.js";
+
 const tableBody =
-    document.querySelector("#requests-table-body");
+    document.querySelector(
+        "#requests-table-body"
+    );
 
 const priorityFilter =
-    document.querySelector("#priority-filter");
+    document.querySelector(
+        "#priority-filter"
+    );
 
 const statusFilter =
-    document.querySelector("#request-status-filter");
+    document.querySelector(
+        "#request-status-filter"
+    );
 
 function notifyDataChanged() {
     document.dispatchEvent(
-        new CustomEvent(APP_EVENTS.DATA_CHANGED)
+        new CustomEvent(
+            APP_EVENTS.DATA_CHANGED
+        )
     );
+}
+
+function renderIcons() {
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
 }
 
 function getFilteredRequests() {
@@ -72,7 +96,10 @@ function getFilteredRequests() {
         );
 }
 
-function createStatusOption(request, status) {
+function createStatusOption(
+    request,
+    status
+) {
     const selected =
         request.status === status
             ? "selected"
@@ -88,26 +115,42 @@ function createStatusOption(request, status) {
     `;
 }
 
+function createDetailsButton(request) {
+    return `
+        <button
+            type="button"
+            class="icon-button"
+            data-action="details"
+            data-id="${request.id}"
+            aria-label="Ver detalhes da solicitação de ${request.employee}"
+            title="Ver detalhes"
+        >
+            <i
+                data-lucide="ellipsis"
+                aria-hidden="true"
+            ></i>
+        </button>
+    `;
+}
+
 function createRequestActions(request) {
+    const detailsButton =
+        createDetailsButton(request);
+
     if (
-        request.status ===
-        REQUEST_STATUS.DELIVERED
+        request.status === REQUEST_STATUS.DELIVERED ||
+        request.status === REQUEST_STATUS.CANCELLED
     ) {
-        return `
-            <span class="request-finished">
-                ${getRequestStatusLabel(
-                    REQUEST_STATUS.DELIVERED
-                )}
-            </span>
-        `;
+        return detailsButton;
     }
 
     const deliverButton =
         request.status ===
-        REQUEST_STATUS.APPROVED
+            REQUEST_STATUS.APPROVED
             ? `
                 <button
                     type="button"
+                    class="button-deliver"
                     data-action="deliver"
                     data-id="${request.id}"
                 >
@@ -117,25 +160,27 @@ function createRequestActions(request) {
             : "";
 
     return `
+        ${detailsButton}
+
         <select
             data-action="status"
             data-id="${request.id}"
-            aria-label="Alterar status"
+            aria-label="Alterar status da solicitação"
         >
             ${createStatusOption(
-                request,
-                REQUEST_STATUS.PENDING
-            )}
+        request,
+        REQUEST_STATUS.PENDING
+    )}
 
             ${createStatusOption(
-                request,
-                REQUEST_STATUS.APPROVED
-            )}
+        request,
+        REQUEST_STATUS.APPROVED
+    )}
 
             ${createStatusOption(
-                request,
-                REQUEST_STATUS.CANCELLED
-            )}
+        request,
+        REQUEST_STATUS.CANCELLED
+    )}
         </select>
 
         ${deliverButton}
@@ -147,30 +192,26 @@ function createRequestRow(request) {
         document.createElement("tr");
 
     row.innerHTML = `
-        <td>${request.employee}</td>
+        <td class="desktop-only">
+            ${request.employee}
+        </td>
+    
         <td>${request.materialName}</td>
-        <td>${request.quantity}</td>
-
-        <td>
-            ${formatDate(request.requestDate)}
+    
+        <td class="desktop-only">
+            ${request.quantity}
         </td>
-
-        <td>
-            <span
-                class="badge badge-priority-${request.priority}"
-            >
-                ${getPriorityLabel(request.priority)}
-            </span>
-        </td>
-
+    
         <td>
             <span
                 class="badge badge-request-${request.status}"
             >
-                ${getRequestStatusLabel(request.status)}
+                ${getRequestStatusLabel(
+        request.status
+    )}
             </span>
         </td>
-
+    
         <td class="table-actions">
             ${createRequestActions(request)}
         </td>
@@ -188,7 +229,7 @@ export function renderRequests() {
     if (!requests.length) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="7">
+                <td colspan="5">
                     Nenhuma solicitação encontrada.
                 </td>
             </tr>
@@ -202,9 +243,11 @@ export function renderRequests() {
             createRequestRow(request)
         );
     });
+
+    renderIcons();
 }
 
-function handleStatusChange(event) {
+async function handleStatusChange(event) {
     const select =
         event.target.closest(
             'select[data-action="status"]'
@@ -214,20 +257,99 @@ function handleStatusChange(event) {
         return;
     }
 
+    const requestId =
+        select.dataset.id;
+
+    const newStatus =
+        select.value;
+
+    const request =
+        getRequestById(requestId);
+
+    if (!request) {
+        showToast(
+            "Solicitação não encontrada.",
+            "error"
+        );
+
+        renderRequests();
+        return;
+    }
+
+    if (
+        newStatus === REQUEST_STATUS.CANCELLED
+    ) {
+        const confirmed =
+            await confirmAction({
+                title: "Cancelar solicitação",
+                message:
+                    "Esta ação cancelará a solicitação e não poderá ser desfeita.",
+                confirmText:
+                    "Cancelar solicitação",
+                variant: "danger",
+                details: [
+                    {
+                        label: "Colaborador",
+                        value: request.employee
+                    },
+                    {
+                        label: "Material",
+                        value: request.materialName
+                    },
+                    {
+                        label: "Quantidade",
+                        value: String(
+                            request.quantity
+                        )
+                    }
+                ]
+            });
+
+        if (!confirmed) {
+            renderRequests();
+            return;
+        }
+    }
+
     try {
         updateRequestStatus(
-            select.dataset.id,
-            select.value
+            requestId,
+            newStatus
         );
 
         notifyDataChanged();
+
+        showToast(
+            newStatus === REQUEST_STATUS.CANCELLED
+                ? "Solicitação cancelada."
+                : "Status da solicitação atualizado."
+        );
     } catch (error) {
-        alert(error.message);
+        showToast(
+            error.message,
+            "error"
+        );
+
         renderRequests();
     }
 }
 
-function handleDelivery(event) {
+function handleRequestDetails(event) {
+    const button =
+        event.target.closest(
+            'button[data-action="details"]'
+        );
+
+    if (!button) {
+        return;
+    }
+
+    openRequestDetails(
+        button.dataset.id
+    );
+}
+
+async function handleDelivery(event) {
     const button =
         event.target.closest(
             'button[data-action="deliver"]'
@@ -238,34 +360,68 @@ function handleDelivery(event) {
     }
 
     const request =
-        getRequestById(button.dataset.id);
+        getRequestById(
+            button.dataset.id
+        );
 
     if (!request) {
-        alert("Solicitação não encontrada.");
+        showToast(
+            "Solicitação não encontrada.",
+            "error"
+        );
+
         return;
     }
 
     const material =
-        getMaterialById(request.materialId);
+        getMaterialById(
+            request.materialId
+        );
 
     if (!material) {
-        alert(
-            "O material desta solicitação não está mais cadastrado."
-        );
-        return;
-    }
-
-    if (request.quantity > material.quantity) {
-        alert(
-            `Estoque insuficiente. Disponível: ${material.quantity} ${material.unit}.`
+        showToast(
+            "O material desta solicitação não está mais cadastrado.",
+            "error"
         );
 
         return;
     }
 
-    const confirmed = confirm(
-        `Confirmar entrega de ${request.quantity} ${material.unit} de ${material.name} para ${request.employee}?`
-    );
+    if (
+        request.quantity >
+        material.quantity
+    ) {
+        showToast(
+            `Estoque insuficiente. Disponível: ${material.quantity} ${material.unit}.`,
+            "warning"
+        );
+
+        return;
+    }
+
+    const confirmed =
+        await confirmAction({
+            title: "Confirmar entrega",
+            message:
+                "Confira os dados antes de registrar a entrega.",
+            confirmText: "Entregar",
+            variant: "primary",
+            details: [
+                {
+                    label: "Material",
+                    value: material.name
+                },
+                {
+                    label: "Quantidade",
+                    value:
+                        `${request.quantity} ${material.unit}`
+                },
+                {
+                    label: "Solicitante",
+                    value: request.employee
+                }
+            ]
+        });
 
     if (!confirmed) {
         return;
@@ -276,7 +432,12 @@ function handleDelivery(event) {
             material.id,
             MOVEMENT_TYPES.EXIT,
             request.quantity,
-            `Entrega para ${request.employee}`
+            request.notes,
+            {
+                source: "request",
+                requestId: request.id,
+                requester: request.employee
+            }
         );
 
         markRequestAsDelivered(
@@ -284,12 +445,24 @@ function handleDelivery(event) {
         );
 
         notifyDataChanged();
+
+        showToast(
+            "Entrega registrada com sucesso."
+        );
     } catch (error) {
-        alert(error.message);
+        showToast(
+            error.message,
+            "error"
+        );
     }
 }
 
 export function initRequestsTable() {
+    tableBody.addEventListener(
+        "click",
+        handleRequestDetails
+    );
+
     tableBody.addEventListener(
         "change",
         handleStatusChange

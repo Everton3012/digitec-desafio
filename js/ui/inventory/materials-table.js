@@ -1,5 +1,6 @@
 import {
     getMaterials,
+    getMaterialById,
     getStockStatus,
     removeMaterial
 } from "../../inventory/materials.js";
@@ -20,6 +21,18 @@ import {
     openMaterialEditForm
 } from "./material-form.js";
 
+import {
+    openMaterialDetails
+} from "./material-details.js";
+
+import {
+    showToast
+} from "../feedback.js";
+
+import {
+    confirmAction
+} from "../confirm.js";
+
 const tableBody =
     document.querySelector("#materials-table-body");
 
@@ -36,6 +49,12 @@ function notifyDataChanged() {
     document.dispatchEvent(
         new CustomEvent(APP_EVENTS.DATA_CHANGED)
     );
+}
+
+function renderIcons() {
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
 }
 
 function getFilteredMaterials() {
@@ -81,39 +100,64 @@ function createMaterialRow(material) {
 
     row.innerHTML = `
         <td>${material.name}</td>
-        <td>${material.category}</td>
-        <td>${material.quantity}</td>
-        <td>${material.unit}</td>
-
-        <td>
+    
+        <td class="desktop-only">
+            ${material.category}
+        </td>
+    
+        <td class="desktop-only">
+            ${material.quantity} ${material.unit}
+        </td>
+    
+        <td class="desktop-only">
             <span class="badge badge-${status}">
                 ${getStockStatusLabel(status)}
             </span>
         </td>
-
+    
         <td class="table-actions">
             <button
                 type="button"
+                class="icon-button"
+                data-action="details"
+                data-id="${material.id}"
+                aria-label="Ver detalhes de ${material.name}"
+                title="Ver detalhes"
+            >
+                <i data-lucide="ellipsis" aria-hidden="true"></i>
+            </button>
+    
+            <button
+                type="button"
+                class="icon-button"
                 data-action="movement"
                 data-id="${material.id}"
+                aria-label="Movimentar estoque de ${material.name}"
+                title="Movimentar estoque"
             >
-                Movimentar
+                <i data-lucide="arrow-right-left" aria-hidden="true"></i>
             </button>
-
+    
             <button
                 type="button"
+                class="icon-button"
                 data-action="edit"
                 data-id="${material.id}"
+                aria-label="Editar ${material.name}"
+                title="Editar"
             >
-                Editar
+                <i data-lucide="pencil" aria-hidden="true"></i>
             </button>
-
+    
             <button
                 type="button"
+                class="icon-button icon-button-danger"
                 data-action="delete"
                 data-id="${material.id}"
+                aria-label="Excluir ${material.name}"
+                title="Excluir"
             >
-                Excluir
+                <i data-lucide="trash-2" aria-hidden="true"></i>
             </button>
         </td>
     `;
@@ -130,7 +174,7 @@ export function renderMaterials() {
     if (!materials.length) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6">
+                <td colspan="5">
                     Nenhum material encontrado.
                 </td>
             </tr>
@@ -144,6 +188,8 @@ export function renderMaterials() {
             createMaterialRow(material)
         );
     });
+
+    renderIcons();
 }
 
 export function renderCategoryFilter() {
@@ -179,7 +225,7 @@ export function renderCategoryFilter() {
     }
 }
 
-function handleTableAction(event) {
+async function handleTableAction(event) {
     const button =
         event.target.closest(
             "button[data-action]"
@@ -191,6 +237,11 @@ function handleTableAction(event) {
 
     const { action, id } =
         button.dataset;
+
+    if (action === "details") {
+        openMaterialDetails(id);
+        return;
+    }
 
     if (action === "movement") {
         openMovementForm(id);
@@ -206,9 +257,35 @@ function handleTableAction(event) {
         return;
     }
 
-    const confirmed = confirm(
-        "Deseja realmente excluir este material?"
-    );
+    const material =
+        getMaterialById(id);
+
+    if (!material) {
+        showToast(
+            "Material não encontrado.",
+            "error"
+        );
+
+        return;
+    }
+
+    const confirmed =
+        await confirmAction({
+            title: "Excluir material",
+            message:
+                "Esta ação removerá o material do estoque. O histórico de movimentações será mantido.",
+            confirmText: "Excluir",
+            details: [
+                {
+                    label: "Material",
+                    value: material.name
+                },
+                {
+                    label: "Quantidade atual",
+                    value: `${material.quantity} ${material.unit}`
+                }
+            ]
+        });
 
     if (!confirmed) {
         return;
@@ -216,9 +293,17 @@ function handleTableAction(event) {
 
     try {
         removeMaterial(id);
+
         notifyDataChanged();
+
+        showToast(
+            "Material excluído com sucesso."
+        );
     } catch (error) {
-        alert(error.message);
+        showToast(
+            error.message,
+            "error"
+        );
     }
 }
 

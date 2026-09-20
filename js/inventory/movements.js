@@ -13,8 +13,7 @@ export function getMovements() {
 }
 
 function validateMovement(type, quantity) {
-    const parsedQuantity =
-        Number(quantity);
+    const parsedQuantity = Number(quantity);
 
     if (
         !Number.isFinite(parsedQuantity) ||
@@ -42,7 +41,8 @@ export function createMovement(
     type,
     quantity,
     notes = "",
-    date = new Date().toISOString()
+    date = new Date().toISOString(),
+    context = {}
 ) {
     const movements = getMovements();
 
@@ -50,10 +50,14 @@ export function createMovement(
         id: crypto.randomUUID(),
         materialId: material.id,
         materialName: material.name,
+        materialUnit: material.unit,
         type,
         quantity: Number(quantity),
         date,
-        notes: notes?.trim() || ""
+        notes: notes?.trim() || "",
+        source: context.source || "manual",
+        requestId: context.requestId || null,
+        requester: context.requester || null
     };
 
     movements.push(movement);
@@ -70,7 +74,8 @@ export function registerMovement(
     materialId,
     type,
     quantity,
-    notes = ""
+    notes = "",
+    context = {}
 ) {
     const movementQuantity =
         validateMovement(type, quantity);
@@ -102,7 +107,8 @@ export function registerMovement(
         );
     }
 
-    const now = new Date().toISOString();
+    const now =
+        new Date().toISOString();
 
     updateStock(
         material,
@@ -111,13 +117,15 @@ export function registerMovement(
         now
     );
 
-    const movement = createMovement(
-        material,
-        type,
-        movementQuantity,
-        notes,
-        now
-    );
+    const movement =
+        createMovement(
+            material,
+            type,
+            movementQuantity,
+            notes,
+            now,
+            context
+        );
 
     saveData(
         STORAGE_KEYS.MATERIALS,

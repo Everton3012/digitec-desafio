@@ -148,37 +148,24 @@ export function addRequest(data) {
     return request;
 }
 
-export function updateRequestStatus(
-    id,
-    status
-) {
+export function updateRequestStatus(id, status) {
     validateStatus(status);
 
-    const requests =
-        getRequests();
-
-    const index =
-        getRequestIndex(
-            requests,
-            id
-        );
-
-    const request =
-        requests[index];
+    const requests = getRequests();
+    const index = getRequestIndex(requests, id);
+    const request = requests[index];
 
     if (
-        request.status ===
-        REQUEST_STATUS.DELIVERED
+        request.status === REQUEST_STATUS.DELIVERED ||
+        request.status === REQUEST_STATUS.CANCELLED
     ) {
         throw new Error(
-            "Uma solicitação entregue não pode ter o status alterado."
+            "Uma solicitação finalizada não pode ter o status alterado."
         );
     }
 
     request.status = status;
-
-    request.updatedAt =
-        new Date().toISOString();
+    request.updatedAt = new Date().toISOString();
 
     saveData(
         STORAGE_KEYS.REQUESTS,

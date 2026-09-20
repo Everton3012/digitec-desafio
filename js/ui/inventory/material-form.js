@@ -5,6 +5,10 @@ import {
 } from "../../inventory/materials.js";
 
 import {
+    showToast
+} from "../feedback.js";
+
+import {
     APP_EVENTS
 } from "../../constants/events.js";
 
@@ -14,6 +18,9 @@ const dialog =
 const form =
     document.querySelector("#material-form");
 
+const formTitle =
+    document.querySelector("#material-form-title");
+
 const newMaterialButton =
     document.querySelector("#new-material");
 
@@ -22,6 +29,11 @@ const closeButton =
 
 const cancelButton =
     document.querySelector("#cancel-material");
+
+const quantityGroup =
+    document.querySelector(
+        "#material-quantity-group"
+    );
 
 const fields = {
     id:
@@ -71,7 +83,12 @@ export function openMaterialForm() {
     form.reset();
 
     fields.id.value = "";
-    fields.quantity.disabled = false;
+
+    formTitle.textContent =
+        "Novo material";
+
+    quantityGroup.hidden =
+        false;
 
     dialog.showModal();
 }
@@ -81,7 +98,11 @@ export function openMaterialEditForm(materialId) {
         getMaterialById(materialId);
 
     if (!material) {
-        alert("Material não encontrado.");
+        showToast(
+            "Material não encontrado.",
+            "error"
+        );
+
         return;
     }
 
@@ -111,7 +132,11 @@ export function openMaterialEditForm(materialId) {
     fields.notes.value =
         material.notes ?? "";
 
-    fields.quantity.disabled = true;
+    formTitle.textContent =
+        "Editar material";
+
+    quantityGroup.hidden =
+        true;
 
     dialog.showModal();
 }
@@ -130,7 +155,10 @@ function handleSubmit(event) {
         getFormData();
 
     try {
-        if (materialId) {
+        const isEditing =
+            Boolean(materialId);
+
+        if (isEditing) {
             updateMaterial(
                 materialId,
                 data
@@ -141,8 +169,17 @@ function handleSubmit(event) {
 
         closeMaterialForm();
         notifyDataChanged();
+
+        showToast(
+            isEditing
+                ? "Material atualizado com sucesso."
+                : "Material cadastrado com sucesso."
+        );
     } catch (error) {
-        alert(error.message);
+        showToast(
+            error.message,
+            "error"
+        );
     }
 }
 

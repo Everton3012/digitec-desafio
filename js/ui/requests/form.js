@@ -11,6 +11,10 @@ import {
     APP_EVENTS
 } from "../../constants/events.js";
 
+import {
+    showToast
+} from "../feedback.js";
+
 const dialog =
     document.querySelector("#request-dialog");
 
@@ -83,7 +87,11 @@ function handleSubmit(event) {
         getMaterialById(fields.material.value);
 
     if (!material) {
-        alert("Selecione um material válido.");
+        showToast(
+            "Selecione um material válido.",
+            "error"
+        );
+
         return;
     }
 
@@ -101,8 +109,15 @@ function handleSubmit(event) {
 
         closeRequestForm();
         notifyDataChanged();
+
+        showToast(
+            "Solicitação registrada com sucesso."
+        );
     } catch (error) {
-        alert(error.message);
+        showToast(
+            error.message,
+            "error"
+        );
     }
 }
 
