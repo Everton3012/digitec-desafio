@@ -49,6 +49,35 @@ let stockStatusChart = null;
 let movementsChart = null;
 
 
+function getCssVariable(variable) {
+    return getComputedStyle(
+        document.documentElement
+    )
+        .getPropertyValue(variable)
+        .trim();
+}
+
+
+function getChartColors() {
+    return {
+        text:
+            getCssVariable("--color-text-secondary"),
+
+        border:
+            getCssVariable("--color-border"),
+
+        success:
+            getCssVariable("--color-success"),
+
+        warning:
+            getCssVariable("--color-warning"),
+
+        danger:
+            getCssVariable("--color-danger")
+    };
+}
+
+
 function getStockSummary(materials) {
     const summary = {
         [STOCK_STATUS.AVAILABLE]: 0,
@@ -58,6 +87,7 @@ function getStockSummary(materials) {
 
     materials.forEach((material) => {
         const status = getStockStatus(material);
+
         summary[status]++;
     });
 
@@ -88,6 +118,8 @@ function getPendingRequestsCount(requests) {
 
 
 function renderStockStatusChart(stockSummary) {
+    const colors = getChartColors();
+
     const data = [
         stockSummary[STOCK_STATUS.AVAILABLE],
         stockSummary[STOCK_STATUS.LOW],
@@ -96,7 +128,18 @@ function renderStockStatusChart(stockSummary) {
 
     if (stockStatusChart) {
         stockStatusChart.data.datasets[0].data = data;
+
+        stockStatusChart.data.datasets[0].backgroundColor = [
+            colors.success,
+            colors.warning,
+            colors.danger
+        ];
+
+        stockStatusChart.options.plugins.legend.labels.color =
+            colors.text;
+
         stockStatusChart.update();
+
         return;
     }
 
@@ -115,11 +158,13 @@ function renderStockStatusChart(stockSummary) {
                 datasets: [
                     {
                         data,
+
                         backgroundColor: [
-                            "#16a34a",
-                            "#d97706",
-                            "#dc2626"
+                            colors.success,
+                            colors.warning,
+                            colors.danger
                         ],
+
                         borderWidth: 0
                     }
                 ]
@@ -132,7 +177,11 @@ function renderStockStatusChart(stockSummary) {
 
                 plugins: {
                     legend: {
-                        position: "bottom"
+                        position: "bottom",
+
+                        labels: {
+                            color: colors.text
+                        }
                     }
                 }
             }
@@ -142,6 +191,8 @@ function renderStockStatusChart(stockSummary) {
 
 
 function renderMovementsChart(movementSummary) {
+    const colors = getChartColors();
+
     const data = [
         movementSummary[MOVEMENT_TYPES.ENTRY],
         movementSummary[MOVEMENT_TYPES.EXIT]
@@ -149,7 +200,26 @@ function renderMovementsChart(movementSummary) {
 
     if (movementsChart) {
         movementsChart.data.datasets[0].data = data;
+
+        movementsChart.data.datasets[0].backgroundColor = [
+            colors.success,
+            colors.danger
+        ];
+
+        movementsChart.options.scales.x.ticks.color =
+            colors.text;
+
+        movementsChart.options.scales.y.ticks.color =
+            colors.text;
+
+        movementsChart.options.scales.x.grid.color =
+            colors.border;
+
+        movementsChart.options.scales.y.grid.color =
+            colors.border;
+
         movementsChart.update();
+
         return;
     }
 
@@ -167,11 +237,14 @@ function renderMovementsChart(movementSummary) {
                 datasets: [
                     {
                         label: "Movimentações",
+
                         data,
+
                         backgroundColor: [
-                            "#16a34a",
-                            "#dc2626"
+                            colors.success,
+                            colors.danger
                         ],
+
                         borderRadius: 6,
                         borderSkipped: false
                     }
@@ -183,10 +256,26 @@ function renderMovementsChart(movementSummary) {
                 maintainAspectRatio: false,
 
                 scales: {
+                    x: {
+                        ticks: {
+                            color: colors.text
+                        },
+
+                        grid: {
+                            color: colors.border
+                        }
+                    },
+
                     y: {
                         beginAtZero: true,
+
                         ticks: {
-                            precision: 0
+                            precision: 0,
+                            color: colors.text
+                        },
+
+                        grid: {
+                            color: colors.border
                         }
                     }
                 },
@@ -232,12 +321,18 @@ export function renderDashboard() {
         movements.length;
 
     renderStockStatusChart(stockSummary);
+
     renderMovementsChart(movementSummary);
 }
 
 
 export function initDashboard() {
     renderDashboard();
+
+    document.addEventListener(
+        "app:theme-changed",
+        renderDashboard
+    );
 }
 
 

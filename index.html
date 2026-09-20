@@ -28,7 +28,6 @@
     <div id="sidebar-overlay" class="sidebar-overlay" hidden></div>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-
             <div class="sidebar-brand">
                 <div class="sidebar-brand-icon">
                     <i data-lucide="boxes" aria-hidden="true"></i>
@@ -39,6 +38,7 @@
                     <span>Controle da Recepção</span>
                 </div>
             </div>
+
             <button type="button" id="mobile-menu-close" class="mobile-menu-close" aria-label="Fechar menu">
                 <i data-lucide="x" aria-hidden="true"></i>
             </button>
@@ -65,6 +65,17 @@
                 <span>Movimentações</span>
             </button>
         </nav>
+
+        <div class="sidebar-footer">
+            <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Ativar tema escuro"
+                title="Alterar tema">
+                <i data-lucide="moon" id="theme-toggle-icon" aria-hidden="true"></i>
+
+                <span id="theme-toggle-label">
+                    Tema escuro
+                </span>
+            </button>
+        </div>
     </aside>
     <main class="main-content">
         <!-- Dashboard -->
@@ -179,11 +190,7 @@
                 </div>
 
                 <div class="page-actions">
-                    <button
-                            type="button"
-                            id="export-inventory"
-                            class="button-secondary"
-                    >
+                    <button type="button" id="export-inventory" class="button-secondary">
                         <i data-lucide="download" aria-hidden="true"></i>
                         <span>Exportar CSV</span>
                     </button>
@@ -241,11 +248,7 @@
                 </div>
 
                 <div class="page-actions">
-                    <button
-                            type="button"
-                            id="export-requests"
-                            class="button-secondary"
-                    >
+                    <button type="button" id="export-requests" class="button-secondary">
                         <i data-lucide="download" aria-hidden="true"></i>
                         <span>Exportar CSV</span>
                     </button>
@@ -302,11 +305,7 @@
                     <p>Histórico de entradas e saídas do estoque</p>
                 </div>
 
-                <button
-                        type="button"
-                        id="export-movements"
-                        class="button-secondary"
-                >
+                <button type="button" id="export-movements" class="button-secondary">
                     <i data-lucide="download" aria-hidden="true"></i>
                     <span>Exportar CSV</span>
                 </button>
@@ -798,13 +797,7 @@
                     <p>Selecione o período que deseja exportar.</p>
                 </div>
 
-                <button
-                        type="button"
-                        id="close-export-dialog"
-                        class="modal-close"
-                        aria-label="Fechar"
-                        title="Fechar"
-                >
+                <button type="button" id="close-export-dialog" class="modal-close" aria-label="Fechar" title="Fechar">
                     <i data-lucide="x" aria-hidden="true"></i>
                 </button>
             </header>
@@ -813,37 +806,22 @@
                 <div class="form-grid">
                     <label class="form-group">
                         <span>Data inicial</span>
-                        <input
-                                type="date"
-                                id="export-start-date"
-                                required
-                        >
+                        <input type="date" id="export-start-date" required>
                     </label>
 
                     <label class="form-group">
                         <span>Data final</span>
-                        <input
-                                type="date"
-                                id="export-end-date"
-                                required
-                        >
+                        <input type="date" id="export-end-date" required>
                     </label>
                 </div>
             </div>
 
             <footer class="modal-footer">
-                <button
-                        type="button"
-                        class="button-secondary"
-                        id="cancel-export"
-                >
+                <button type="button" class="button-secondary" id="cancel-export">
                     Cancelar
                 </button>
 
-                <button
-                        type="submit"
-                        class="button-primary"
-                >
+                <button type="submit" class="button-primary">
                     <i data-lucide="download" aria-hidden="true"></i>
                     Exportar CSV
                 </button>

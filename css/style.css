@@ -17,9 +17,51 @@
     --color-warning: #d97706;
     --color-danger: #dc2626;
 
+    --color-primary-soft: #eff6ff;
+
+    --color-success-soft: #dcfce7;
+    --color-success-strong: #166534;
+
+    --color-warning-soft: #fef3c7;
+    --color-warning-strong: #92400e;
+
+    --color-danger-soft: #fee2e2;
+    --color-danger-strong: #991b1b;
+
+    --shadow-toast: 0 8px 24px rgba(15, 23, 42, 0.12);
+
     --sidebar-width: 240px;
     --border-radius: 8px;
     --transition: 0.2s ease;
+}
+
+[data-theme="dark"] {
+    --color-primary: #3b82f6;
+    --color-primary-hover: #60a5fa;
+
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-border: #334155;
+
+    --color-text: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+
+    --color-primary-soft: #172554;
+
+    --color-success-soft: #052e16;
+    --color-success-strong: #86efac;
+
+    --color-warning-soft: #451a03;
+    --color-warning-strong: #fcd34d;
+
+    --color-danger-soft: #450a0a;
+    --color-danger-strong: #fca5a5;
+
+    --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -31,6 +73,9 @@ body {
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: Arial, Helvetica, sans-serif;
+    transition:
+        background-color var(--transition),
+        color var(--transition);
 }
 
 
@@ -64,6 +109,10 @@ body {
 
     background-color: var(--color-surface);
     border-right: 1px solid var(--color-border);
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition);
 }
 
 .sidebar-header {
@@ -114,6 +163,7 @@ body {
     margin-top: 3px;
 
     color: var(--color-text-secondary);
+
     font-size: 0.8rem;
 }
 
@@ -143,13 +193,14 @@ body {
     border-radius: var(--border-radius);
 
     color: var(--color-text-secondary);
+
     font-weight: 500;
     text-align: left;
 
     transition:
-            background-color var(--transition),
-            border-color var(--transition),
-            color var(--transition);
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition);
 }
 
 .sidebar-nav button .lucide {
@@ -175,6 +226,57 @@ body {
     outline-offset: 2px;
 }
 
+/* ================================
+   Tema
+================================ */
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+
+    color: var(--color-text-secondary);
+
+    font-weight: 500;
+    text-align: left;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition);
+}
+
+.theme-toggle:hover {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.theme-toggle .lucide {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
 
 /* ================================
    Navegação mobile
@@ -199,7 +301,6 @@ body {
 
 .main-content {
     min-height: 100vh;
-
     margin-left: var(--sidebar-width);
     padding: 32px;
 }
@@ -221,6 +322,7 @@ body {
     margin-top: 4px;
 
     color: var(--color-text-secondary);
+
     font-size: 0.9rem;
 }
 
@@ -247,9 +349,9 @@ button {
     font-weight: 600;
 
     transition:
-            background-color var(--transition),
-            color var(--transition),
-            border-color var(--transition);
+        background-color var(--transition),
+        color var(--transition),
+        border-color var(--transition);
 }
 
 .button-primary {
@@ -290,17 +392,19 @@ button {
     gap: 8px;
 
     min-height: 40px;
+
     padding: 10px 16px;
 
     background-color: var(--color-primary);
     border-radius: var(--border-radius);
 
     color: #ffffff;
+
     font-weight: 600;
 
     transition:
-            background-color var(--transition),
-            transform var(--transition);
+        background-color var(--transition),
+        transform var(--transition);
 }
 
 #new-material:hover,
@@ -354,11 +458,16 @@ button {
     gap: 16px;
 
     min-width: 0;
+
     padding: 20px;
 
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition);
 }
 
 .card-icon {
@@ -370,10 +479,14 @@ button {
     width: 44px;
     height: 44px;
 
-    background-color: #eff6ff;
+    background-color: var(--color-primary-soft);
     border-radius: 10px;
 
     color: var(--color-primary);
+
+    transition:
+        background-color var(--transition),
+        color var(--transition);
 }
 
 .card-icon .lucide {
@@ -382,18 +495,18 @@ button {
 }
 
 .card-icon-success {
-    background-color: #dcfce7;
-    color: #166534;
+    background-color: var(--color-success-soft);
+    color: var(--color-success-strong);
 }
 
 .card-icon-warning {
-    background-color: #fef3c7;
-    color: #92400e;
+    background-color: var(--color-warning-soft);
+    color: var(--color-warning-strong);
 }
 
 .card-icon-danger {
-    background-color: #fee2e2;
-    color: #991b1b;
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger-strong);
 }
 
 .card-content {
@@ -404,6 +517,7 @@ button {
     display: block;
 
     color: var(--color-text-secondary);
+
     font-size: 0.875rem;
     line-height: 1.35;
 }
@@ -414,6 +528,7 @@ button {
     margin-top: 4px;
 
     color: var(--color-text);
+
     font-size: 1.75rem;
     line-height: 1.1;
 }
@@ -429,6 +544,7 @@ button {
     gap: 16px;
 
     width: 100%;
+
     margin-top: 16px;
 }
 
@@ -440,6 +556,10 @@ button {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition);
 }
 
 .chart-header {
@@ -447,6 +567,7 @@ button {
 }
 
 .chart-header h3 {
+    color: var(--color-text);
     font-size: 1rem;
 }
 
@@ -454,6 +575,7 @@ button {
     margin-top: 4px;
 
     color: var(--color-text-secondary);
+
     font-size: 0.85rem;
 }
 
@@ -491,14 +613,20 @@ button {
     padding: 14px 16px;
 
     background-color: var(--color-surface);
-
     border: 1px solid var(--color-border);
     border-left: 4px solid var(--color-primary);
     border-radius: var(--border-radius);
 
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+    color: var(--color-text);
+
+    box-shadow: var(--shadow-toast);
 
     animation: toast-enter 0.2s ease;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition);
 }
 
 .toast-success {
@@ -521,13 +649,23 @@ button {
     background: transparent;
 
     color: var(--color-text-secondary);
+
     font-size: 1.25rem;
     line-height: 1;
+}
+
+.toast-close:hover {
+    color: var(--color-text);
 }
 
 .toast-leaving {
     animation: toast-leave 0.2s ease forwards;
 }
+
+
+/* ================================
+   Animações
+================================ */
 
 @keyframes toast-enter {
     from {

@@ -1,5 +1,4 @@
-// js/app.js
-
+import { initTheme } from "./ui/theme.js";
 import { APP_EVENTS } from "./constants/events.js";
 import {
     initExportDialog
@@ -38,6 +37,7 @@ function refreshApplication() {
 }
 
 function initApplication() {
+    initTheme();
     initInventoryUI();
     initMovementsUI();
     initRequestsUI();
