@@ -13,7 +13,6 @@ import {
     downloadCsv
 } from "../../utils/csv.js";
 
-
 function formatCsvDate(date) {
     if (!date) return "";
 
@@ -21,7 +20,6 @@ function formatCsvDate(date) {
         new Date(date)
     );
 }
-
 
 export function exportInventoryCsv() {
     const materials = getMaterials();

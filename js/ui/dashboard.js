@@ -17,7 +17,6 @@ import {
     REQUEST_STATUS
 } from "../constants/domain.js";
 
-
 const elements = {
     totalMaterials:
         document.querySelector("#total-materials"),
@@ -44,10 +43,8 @@ const elements = {
         document.querySelector("#movements-chart")
 };
 
-
 let stockStatusChart = null;
 let movementsChart = null;
-
 
 function getCssVariable(variable) {
     return getComputedStyle(
@@ -56,7 +53,6 @@ function getCssVariable(variable) {
         .getPropertyValue(variable)
         .trim();
 }
-
 
 function getChartColors() {
     return {
@@ -77,7 +73,6 @@ function getChartColors() {
     };
 }
 
-
 function getStockSummary(materials) {
     const summary = {
         [STOCK_STATUS.AVAILABLE]: 0,
@@ -94,7 +89,6 @@ function getStockSummary(materials) {
     return summary;
 }
 
-
 function getMovementSummary(movements) {
     const summary = {
         [MOVEMENT_TYPES.ENTRY]: 0,
@@ -108,14 +102,12 @@ function getMovementSummary(movements) {
     return summary;
 }
 
-
 function getPendingRequestsCount(requests) {
     return requests.filter(
         (request) =>
             request.status === REQUEST_STATUS.PENDING
     ).length;
 }
-
 
 function renderStockStatusChart(stockSummary) {
     const colors = getChartColors();
@@ -147,38 +139,31 @@ function renderStockStatusChart(stockSummary) {
         elements.stockStatusChart,
         {
             type: "doughnut",
-
             data: {
                 labels: [
                     "Em estoque",
                     "Estoque baixo",
                     "Sem estoque"
                 ],
-
                 datasets: [
                     {
                         data,
-
                         backgroundColor: [
                             colors.success,
                             colors.warning,
                             colors.danger
                         ],
-
                         borderWidth: 0
                     }
                 ]
             },
-
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 cutout: "68%",
-
                 plugins: {
                     legend: {
                         position: "bottom",
-
                         labels: {
                             color: colors.text
                         }
@@ -227,59 +212,47 @@ function renderMovementsChart(movementSummary) {
         elements.movementsChart,
         {
             type: "bar",
-
             data: {
                 labels: [
                     "Entradas",
                     "Saídas"
                 ],
-
                 datasets: [
                     {
                         label: "Movimentações",
-
                         data,
-
                         backgroundColor: [
                             colors.success,
                             colors.danger
                         ],
-
                         borderRadius: 6,
                         borderSkipped: false
                     }
                 ]
             },
-
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-
                 scales: {
                     x: {
                         ticks: {
                             color: colors.text
                         },
-
                         grid: {
                             color: colors.border
                         }
                     },
-
                     y: {
                         beginAtZero: true,
-
                         ticks: {
                             precision: 0,
                             color: colors.text
                         },
-
                         grid: {
                             color: colors.border
                         }
                     }
                 },
-
                 plugins: {
                     legend: {
                         display: false
@@ -325,7 +298,6 @@ export function renderDashboard() {
     renderMovementsChart(movementSummary);
 }
 
-
 export function initDashboard() {
     renderDashboard();
 
@@ -334,7 +306,6 @@ export function initDashboard() {
         renderDashboard
     );
 }
-
 
 export function refreshDashboard() {
     renderDashboard();

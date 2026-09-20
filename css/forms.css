@@ -38,7 +38,6 @@
     border-color: var(--color-primary);
 }
 
-
 /* ================================
    Dialog base
 ================================ */
@@ -70,7 +69,6 @@ dialog form {
     padding: 24px;
 }
 
-
 /* ================================
    Cabeçalho de modal
 ================================ */
@@ -98,7 +96,6 @@ dialog form {
 .modal-header button {
     background: transparent;
 }
-
 
 /* ================================
    Botão fechar
@@ -141,7 +138,6 @@ dialog form {
     width: 18px;
     height: 18px;
 }
-
 
 /* ================================
    Formulários
@@ -214,7 +210,6 @@ dialog form {
     grid-column: 1 / -1;
 }
 
-
 /* ================================
    Rodapé de modal
 ================================ */
@@ -226,7 +221,6 @@ dialog form {
 
     margin-top: 24px;
 }
-
 
 /* ================================
    Modal de formulário
@@ -279,7 +273,6 @@ dialog form {
     background-color: var(--color-background);
     border-top: 1px solid var(--color-border);
 }
-
 
 /* ================================
    Modal de confirmação
@@ -383,7 +376,6 @@ dialog form {
     background-color: var(--color-background);
 }
 
-
 /* ================================
    Modal de detalhes
 ================================ */
@@ -414,7 +406,6 @@ dialog form {
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }
-
 
 /* ================================
    Detalhes compartilhados

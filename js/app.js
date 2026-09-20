@@ -32,7 +32,6 @@ function refreshApplication() {
     refreshMovementsUI();
     refreshRequestsUI();
     refreshDashboard();
-
     renderIcons();
 }
 
@@ -44,7 +43,6 @@ function initApplication() {
     initDashboard();
     initNavigation();
     initExportDialog();
-
     renderIcons();
 
     document.addEventListener(

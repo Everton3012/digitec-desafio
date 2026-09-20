@@ -20,7 +20,6 @@ import {
     showToast
 } from "../feedback.js";
 
-
 export function initInventoryUI() {
     initMaterialForm();
     initMaterialDetails();
@@ -47,7 +46,6 @@ export function initInventoryUI() {
         );
     });
 }
-
 
 export function refreshInventoryUI() {
     renderCategoryFilter();

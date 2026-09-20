@@ -4,7 +4,6 @@ export function escapeCsvValue(value) {
     return `"${text.replaceAll('"', '""')}"`;
 }
 
-
 export function createCsvContent(headers, rows) {
     return [
         headers,
@@ -17,7 +16,6 @@ export function createCsvContent(headers, rows) {
         )
         .join("\n");
 }
-
 
 export function downloadCsv(content, filename) {
     const blob = new Blob(
@@ -40,7 +38,6 @@ export function downloadCsv(content, filename) {
 
     URL.revokeObjectURL(url);
 }
-
 
 export function createCsvFilename(prefix) {
     const date = new Date()

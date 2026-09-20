@@ -19,9 +19,7 @@ const closeButton =
 const cancelButton =
     document.querySelector("#cancel-export");
 
-
 let exportHandler = null;
-
 
 function closeDialog() {
     if (dialog.open) {
@@ -32,11 +30,10 @@ function closeDialog() {
     exportHandler = null;
 }
 
-
 export function openExportDialog({
-                                     title: dialogTitle,
-                                     onExport
-                                 }) {
+    title: dialogTitle,
+    onExport
+}) {
     title.textContent = dialogTitle;
     exportHandler = onExport;
 
@@ -44,7 +41,6 @@ export function openExportDialog({
 
     dialog.showModal();
 }
-
 
 export function initExportDialog() {
     closeButton.addEventListener(

@@ -23,7 +23,6 @@ import {
     showToast
 } from "../feedback.js";
 
-
 export function initRequestsUI() {
     initRequestForm();
     initRequestDetails();
@@ -37,9 +36,9 @@ export function initRequestsUI() {
             title: "Exportar solicitações",
 
             onExport: ({
-                           startDate,
-                           endDate
-                       }) => {
+                startDate,
+                endDate
+            }) => {
                 const exported =
                     exportRequestsCsv({
                         startDate,
@@ -65,7 +64,6 @@ export function initRequestsUI() {
         });
     });
 }
-
 
 export function refreshRequestsUI() {
     renderRequests();

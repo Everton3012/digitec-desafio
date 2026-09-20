@@ -11,13 +11,11 @@ import {
     downloadCsv
 } from "../../utils/csv.js";
 
-
 function getDateOnly(date) {
     return new Date(date)
         .toISOString()
         .slice(0, 10);
 }
-
 
 function formatCsvDate(date) {
     if (!date) return "";
@@ -28,7 +26,6 @@ function formatCsvDate(date) {
     }).format(new Date(date));
 }
 
-
 function getMovementSourceLabel(source) {
     const labels = {
         initial: "Estoque inicial",
@@ -38,7 +35,6 @@ function getMovementSourceLabel(source) {
 
     return labels[source] ?? source ?? "";
 }
-
 
 function getMovementsByPeriod(
     movements,
@@ -56,11 +52,10 @@ function getMovementsByPeriod(
     });
 }
 
-
 export function exportMovementsCsv({
-                                       startDate,
-                                       endDate
-                                   }) {
+    startDate,
+    endDate
+}) {
     const movements =
         getMovementsByPeriod(
             getMovements(),

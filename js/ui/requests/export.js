@@ -12,13 +12,11 @@ import {
     downloadCsv
 } from "../../utils/csv.js";
 
-
 function getDateOnly(date) {
     return new Date(date)
         .toISOString()
         .slice(0, 10);
 }
-
 
 function formatCsvDate(date) {
     if (!date) return "";
@@ -28,7 +26,6 @@ function formatCsvDate(date) {
         timeStyle: "short"
     }).format(new Date(date));
 }
-
 
 function getRequestsByPeriod(
     requests,
@@ -46,11 +43,10 @@ function getRequestsByPeriod(
     });
 }
 
-
 export function exportRequestsCsv({
-                                      startDate,
-                                      endDate
-                                  }) {
+    startDate,
+    endDate
+}) {
     const requests =
         getRequestsByPeriod(
             getRequests(),

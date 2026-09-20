@@ -36,9 +36,9 @@ export function initMovementsUI() {
             title: "Exportar movimentações",
 
             onExport: ({
-                           startDate,
-                           endDate
-                       }) => {
+                startDate,
+                endDate
+            }) => {
                 const exported =
                     exportMovementsCsv({
                         startDate,
