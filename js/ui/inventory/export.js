@@ -7,12 +7,11 @@ import {
     getStockStatusLabel
 } from "../../utils/formatters.js";
 
-
-function escapeCsvValue(value) {
-    const text = String(value ?? "");
-
-    return `"${text.replaceAll('"', '""')}"`;
-}
+import {
+    createCsvContent,
+    createCsvFilename,
+    downloadCsv
+} from "../../utils/csv.js";
 
 
 function formatCsvDate(date) {
@@ -24,7 +23,13 @@ function formatCsvDate(date) {
 }
 
 
-function createCsvContent(materials) {
+export function exportInventoryCsv() {
+    const materials = getMaterials();
+
+    if (materials.length === 0) {
+        return false;
+    }
+
     const headers = [
         "Material",
         "Categoria",
@@ -51,59 +56,13 @@ function createCsvContent(materials) {
         material.notes
     ]);
 
-    return [
-        headers,
-        ...rows
-    ]
-        .map((row) =>
-            row
-                .map(escapeCsvValue)
-                .join(";")
-        )
-        .join("\n");
-}
-
-
-function downloadCsv(content) {
-    const blob = new Blob(
-        ["\uFEFF", content],
-        {
-            type: "text/csv;charset=utf-8;"
-        }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-
-    const date = new Date()
-        .toISOString()
-        .slice(0, 10);
-
-    link.href = url;
-    link.download =
-        `estoque-digitec-${date}.csv`;
-
-    document.body.appendChild(link);
-
-    link.click();
-    link.remove();
-
-    URL.revokeObjectURL(url);
-}
-
-
-export function exportInventoryCsv() {
-    const materials = getMaterials();
-
-    if (materials.length === 0) {
-        return false;
-    }
-
     const content =
-        createCsvContent(materials);
+        createCsvContent(headers, rows);
 
-    downloadCsv(content);
+    const filename =
+        createCsvFilename("estoque-digitec");
+
+    downloadCsv(content, filename);
 
     return true;
 }

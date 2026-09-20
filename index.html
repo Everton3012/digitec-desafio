@@ -177,8 +177,13 @@
                     <h2>Estoque</h2>
                     <p>Gerencie os materiais do escritório</p>
                 </div>
+
                 <div class="page-actions">
-                    <button type="button" id="export-inventory" class="button-secondary">
+                    <button
+                            type="button"
+                            id="export-inventory"
+                            class="button-secondary"
+                    >
                         <i data-lucide="download" aria-hidden="true"></i>
                         <span>Exportar CSV</span>
                     </button>
@@ -234,10 +239,22 @@
                     <h2>Solicitações</h2>
                     <p>Solicitações de materiais dos colaboradores</p>
                 </div>
-                <button type="button" id="new-request">
-                    <i data-lucide="plus" aria-hidden="true"></i>
-                    <span>Nova solicitação</span>
-                </button>
+
+                <div class="page-actions">
+                    <button
+                            type="button"
+                            id="export-requests"
+                            class="button-secondary"
+                    >
+                        <i data-lucide="download" aria-hidden="true"></i>
+                        <span>Exportar CSV</span>
+                    </button>
+
+                    <button type="button" id="new-request">
+                        <i data-lucide="plus" aria-hidden="true"></i>
+                        <span>Nova solicitação</span>
+                    </button>
+                </div>
             </header>
             <div class="filters">
                 <label>
@@ -284,6 +301,15 @@
                     <h2>Movimentações</h2>
                     <p>Histórico de entradas e saídas do estoque</p>
                 </div>
+
+                <button
+                        type="button"
+                        id="export-movements"
+                        class="button-secondary"
+                >
+                    <i data-lucide="download" aria-hidden="true"></i>
+                    <span>Exportar CSV</span>
+                </button>
             </header>
             <div class="table-container">
                 <table>
@@ -762,6 +788,67 @@
                 </p>
             </div>
         </div>
+    </dialog>
+    <dialog id="export-dialog" class="form-dialog">
+        <form id="export-form">
+            <header class="modal-header">
+                <div>
+                    <span class="modal-eyebrow">Relatório</span>
+                    <h2 id="export-dialog-title">Exportar dados</h2>
+                    <p>Selecione o período que deseja exportar.</p>
+                </div>
+
+                <button
+                        type="button"
+                        id="close-export-dialog"
+                        class="modal-close"
+                        aria-label="Fechar"
+                        title="Fechar"
+                >
+                    <i data-lucide="x" aria-hidden="true"></i>
+                </button>
+            </header>
+
+            <div class="modal-content">
+                <div class="form-grid">
+                    <label class="form-group">
+                        <span>Data inicial</span>
+                        <input
+                                type="date"
+                                id="export-start-date"
+                                required
+                        >
+                    </label>
+
+                    <label class="form-group">
+                        <span>Data final</span>
+                        <input
+                                type="date"
+                                id="export-end-date"
+                                required
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <footer class="modal-footer">
+                <button
+                        type="button"
+                        class="button-secondary"
+                        id="cancel-export"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                        type="submit"
+                        class="button-primary"
+                >
+                    <i data-lucide="download" aria-hidden="true"></i>
+                    Exportar CSV
+                </button>
+            </footer>
+        </form>
     </dialog>
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

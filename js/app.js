@@ -2,6 +2,9 @@
 
 import { APP_EVENTS } from "./constants/events.js";
 import {
+    initExportDialog
+} from "./ui/export-dialog.js";
+import {
     initInventoryUI,
     refreshInventoryUI
 } from "./ui/inventory/inventory-ui.js";
@@ -40,6 +43,7 @@ function initApplication() {
     initRequestsUI();
     initDashboard();
     initNavigation();
+    initExportDialog();
 
     renderIcons();
 
