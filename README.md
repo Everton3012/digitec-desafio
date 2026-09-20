@@ -30,7 +30,8 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 * Controle de status das entregas
 * Pesquisa de entregas por destinatário e filtro por status
 * Visualização de entregas pendentes de retirada
-* Dashboard com indicadores gerais
+* Dashboard com indicadores de estoque, solicitações, movimentações e entregas
+* Indicadores de entregas recebidas, destinatários avisados e entregas pendentes
 * Gráficos de situação do estoque e movimentações
 * Exportação do estoque para CSV
 * Exportação de movimentações por período para CSV
@@ -47,7 +48,7 @@ A aplicação permite gerenciar materiais, acompanhar os níveis de estoque, reg
 * CSS3
 * JavaScript
 * ES Modules
-* LocalStorage
+* localStorage
 * Chart.js
 * Lucide Icons
 
