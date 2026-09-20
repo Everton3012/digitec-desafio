@@ -11,8 +11,8 @@
 
     scrollbar-width: thin;
     scrollbar-color:
-            var(--color-border)
-            transparent;
+        var(--color-border)
+        transparent;
 }
 
 .table-container::-webkit-scrollbar {
@@ -49,8 +49,10 @@ td {
 
 th {
     color: var(--color-text-secondary);
+
     font-size: 0.8rem;
     font-weight: 600;
+
     text-transform: uppercase;
     white-space: nowrap;
 }
@@ -91,8 +93,8 @@ tbody tr:hover {
 .badge-entry,
 .badge-priority-low,
 .badge-request-delivered {
-    background-color: #dcfce7;
-    color: #166534;
+    background-color: var(--color-success-soft);
+    color: var(--color-success-strong);
 }
 
 
@@ -101,8 +103,8 @@ tbody tr:hover {
 .badge-low,
 .badge-priority-medium,
 .badge-request-pending {
-    background-color: #fef3c7;
-    color: #92400e;
+    background-color: var(--color-warning-soft);
+    color: var(--color-warning-strong);
 }
 
 
@@ -112,16 +114,16 @@ tbody tr:hover {
 .badge-exit,
 .badge-priority-high,
 .badge-request-cancelled {
-    background-color: #fee2e2;
-    color: #991b1b;
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger-strong);
 }
 
 
 /* Aprovado */
 
 .badge-request-approved {
-    background-color: #dbeafe;
-    color: #1e40af;
+    background-color: var(--color-primary-soft);
+    color: var(--color-primary);
 }
 
 
@@ -133,6 +135,7 @@ tbody tr:hover {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
+
     gap: 6px;
 
     white-space: nowrap;
@@ -172,22 +175,25 @@ tbody tr:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     flex-shrink: 0;
 
     width: 36px;
     height: 36px;
+
     padding: 0;
 
     background-color: transparent;
+
     border: 1px solid transparent;
     border-radius: 8px;
 
     color: var(--color-text-secondary);
 
     transition:
-            background-color var(--transition),
-            border-color var(--transition),
-            color var(--transition);
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition);
 }
 
 .icon-button:hover {
@@ -203,8 +209,8 @@ tbody tr:hover {
 
 .icon-button-danger:hover,
 .table-actions button[data-action="delete"]:hover {
-    background-color: #fef2f2;
-    border-color: #fecaca;
+    background-color: var(--color-danger-soft);
+    border-color: var(--color-danger);
     color: var(--color-danger);
 }
 
@@ -221,7 +227,6 @@ tbody tr:hover {
 .table-actions button[data-action="deliver"] {
     background-color: var(--color-success);
     border-color: var(--color-success);
-
     color: #ffffff;
 }
 
