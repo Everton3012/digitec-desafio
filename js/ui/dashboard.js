@@ -12,13 +12,15 @@ import {
 } from "../requests/requests.js";
 
 import {
+    getDeliveries,
     getPendingDeliveriesCount
 } from "../deliveries/deliveries.js";
 
 import {
     STOCK_STATUS,
     MOVEMENT_TYPES,
-    REQUEST_STATUS
+    REQUEST_STATUS,
+    DELIVERY_STATUS
 } from "../constants/domain.js";
 
 const elements = {
@@ -42,6 +44,12 @@ const elements = {
 
     pendingDeliveries:
         document.querySelector("#pending-deliveries"),
+
+    receivedDeliveries:
+        document.querySelector("#received-deliveries"),
+
+    notifiedDeliveries:
+        document.querySelector("#notified-deliveries"),
 
     stockStatusChart:
         document.querySelector("#stock-status-chart"),
@@ -114,6 +122,20 @@ function getPendingRequestsCount(requests) {
         (request) =>
             request.status === REQUEST_STATUS.PENDING
     ).length;
+}
+
+function getDeliveriesSummary(deliveries) {
+    return {
+        received: deliveries.filter(
+            (delivery) =>
+                delivery.status === DELIVERY_STATUS.RECEIVED
+        ).length,
+
+        notified: deliveries.filter(
+            (delivery) =>
+                delivery.status === DELIVERY_STATUS.NOTIFIED
+        ).length
+    };
 }
 
 function renderStockStatusChart(stockSummary) {
@@ -275,12 +297,16 @@ export function renderDashboard() {
     const materials = getMaterials();
     const movements = getMovements();
     const requests = getRequests();
+    const deliveries = getDeliveries();
 
     const stockSummary =
         getStockSummary(materials);
 
     const movementSummary =
         getMovementSummary(movements);
+
+    const deliveriesSummary =
+        getDeliveriesSummary(deliveries);
 
     elements.totalMaterials.textContent =
         materials.length;
@@ -302,6 +328,12 @@ export function renderDashboard() {
 
     elements.pendingDeliveries.textContent =
         getPendingDeliveriesCount();
+
+    elements.receivedDeliveries.textContent =
+        deliveriesSummary.received;
+
+    elements.notifiedDeliveries.textContent =
+        deliveriesSummary.notified;
 
     renderStockStatusChart(stockSummary);
 
