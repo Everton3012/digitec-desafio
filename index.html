@@ -142,6 +142,33 @@
                     </div>
                 </article>
             </div>
+            <div class="dashboard-charts">
+                <article class="chart-card">
+                    <header class="chart-header">
+                        <div>
+                            <h3>Situação do estoque</h3>
+                            <p>Distribuição dos materiais por situação</p>
+                        </div>
+                    </header>
+
+                    <div class="chart-container">
+                        <canvas id="stock-status-chart"></canvas>
+                    </div>
+                </article>
+
+                <article class="chart-card">
+                    <header class="chart-header">
+                        <div>
+                            <h3>Movimentações do estoque</h3>
+                            <p>Comparativo entre entradas e saídas</p>
+                        </div>
+                    </header>
+
+                    <div class="chart-container">
+                        <canvas id="movements-chart"></canvas>
+                    </div>
+                </article>
+            </div>
         </section>
         <!-- Estoque -->
         <section id="inventory" class="page-section" hidden>
@@ -730,6 +757,7 @@
         </div>
     </dialog>
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="./js/app.js"></script>
 </body>

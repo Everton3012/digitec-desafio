@@ -179,6 +179,13 @@
         font-size: 1.5rem;
     }
 
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
 
     /* Filtros */
 
