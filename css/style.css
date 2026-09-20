@@ -429,6 +429,30 @@ button {
 }
 
 /* ================================
+   Exportação de inventário
+================================ */
+
+.page-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#export-inventory {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 40px;
+}
+
+#export-inventory .lucide {
+    width: 17px;
+    height: 17px;
+}
+
+/* ================================
    Toasts
 ================================ */
 

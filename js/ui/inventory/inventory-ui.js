@@ -3,6 +3,10 @@ import {
 } from "./material-form.js";
 
 import {
+    exportInventoryCsv
+} from "./export.js";
+
+import {
     initMaterialsTable,
     renderCategoryFilter,
     renderMaterials
@@ -16,6 +20,12 @@ export function initInventoryUI() {
     initMaterialForm();
     initMaterialDetails();
     initMaterialsTable();
+    const exportButton =
+        document.querySelector("#export-inventory");
+
+    exportButton.addEventListener("click", () => {
+        exportInventoryCsv();
+    });
 }
 
 export function refreshInventoryUI() {

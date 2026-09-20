@@ -187,6 +187,16 @@
         height: 250px;
     }
 
+    /* Exportação de inventário */
+
+    .page-actions {
+        width: 100%;
+    }
+
+    .page-actions > button {
+        flex: 1;
+    }
+
     /* Filtros */
 
     .filters {
